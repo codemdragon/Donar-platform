@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ration Distribution System</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: var(--border);
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Cards and Sections */
+        .card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button.submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button.submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Dashboard/Table Styling */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+        }
+
+        /* Status Badges */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: #fee2e2; color: #991b1b; }
+        .status-assigned { background: #fef3c7; color: #92400e; }
+        .status-fulfilled { background: #d1fae5; color: #065f46; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 10px;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Ration Distribution</h1>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('request-view', this)">Requester Form</button>
+        <button class="tab-btn" onclick="switchTab('dashboard-view', this)">Branch Dashboard</button>
+    </div>
+
+    <!-- REQUESTER FORM VIEW -->
+    <div id="request-view" class="view active">
+        <div class="card">
+            <h2>Registration Form</h2>
+            <form id="rationForm">
+                <div class="form-group">
+                    <label for="cnic">CNIC Number (e.g. 4210112345671)</label>
+                    <input type="text" id="cnic" name="cnic" placeholder="13 digit CNIC" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number (e.g. 03001234567)</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="11 digit Mobile Number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Select Area</label>
+                    <select id="area" name="area" onchange="toggleOtherArea()" required>
+                        <option value="">-- Select Area --</option>
+                        <option value="DHA">DHA</option>
+                        <option value="Clifton">Clifton</option>
+                        <option value="Tariq Road">Tariq Road</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div id="otherAreaGroup" class="form-group hidden">
+                    <label for="otherArea">Please specify Area</label>
+                    <input type="text" id="otherArea" name="otherArea">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Complete Home Address</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </form>
+            <div id="formFeedback" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <!-- BRANCH DASHBOARD VIEW -->
+    <div id="dashboard-view" class="view">
+        <div class="card">
+            <h2>Distribution Dashboard</h2>
+            
+            <div class="controls">
+                <input type="text" id="searchCNIC" placeholder="Search by CNIC..." onkeyup="filterTable()">
+                <input type="text" id="searchMobile" placeholder="Search by Mobile..." onkeyup="filterTable()">
+            </div>
+
+            <div class="table-container">
+                <table id="requestsTable">
+                    <thead>
+                        <tr>
+                            <th>CNIC</th>
+                            <th>Mobile</th>
+                            <th>Area</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Donor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be injected here by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="noDataMsg" class="hidden" style="text-align: center; padding: 20px; color: #666;">
+                No matching records found.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * INITIALIZATION & STATE MANAGEMENT
+     */
+    
+    // Load existing data from localStorage or initialize empty array
+    let requests = JSON.parse(localStorage.getItem('ration_requests')) || [];
+
+    // On page load, populate the dashboard table
+    window.onload = () => {
+        renderTable(requests);
+    };
+
+    /**
+     * UI NAVIGATION
+     */
+    function switchTab(viewId, btn) {
+        // Switch view visibility
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        
+        // Switch button styling
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // If switching to dashboard, refresh the table
+        if(viewId === 'dashboard-view') {
+            renderTable(requests);
+        }
+    }
+
+    /**
+     * FORM LOGIC
+     */
+    function toggleOtherArea() {
+        const areaSelect = document.getElementById('area');
+        const otherGroup = document.getElementById('otherAreaGroup');
+        const otherInput = document.getElementById('otherArea');
+        
+        if (areaSelect.value === 'Other') {
+            otherGroup.classList.remove('hidden');
+            otherInput.setAttribute('required', 'required');
+        } else {
+            otherGroup.classList.add('hidden');
+            otherInput.removeAttribute('required');
+        }
+    }
+
+    document.getElementById('rationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const feedback = document.getElementById('formFeedback');
+        const formData = new FormData(this);
+        
+        // Basic Validation
+        const cnic = formData.get('cnic').trim();
+        const mobile = formData.get('mobile').trim();
+        const area = formData.get('area') === 'Other' ? formData.get('otherArea') : formData.get('area');
+        const address = formData.get('address').trim();
+
+        // Regex for validation
+        const cnicRegex = /^[0-9]{13}$/;
+        const mobileRegex = /^[0-9]{11}$/;
+
+        if (!cnicRegex.test(cnic)) {
+            showFeedback('Invalid CNIC. Must be 13 digits.', 'var(--danger)');
+            return;
+        }
+
+        if (!mobileRegex.test(mobile)) {
+            showFeedback('Invalid Mobile. Must be 11 digits (e.g. 03001234567).', 'var(--danger)');
+            return;
+        }
+
+        // Create new entry object
+        const newRequest = {
+            id: Date.now(),
+            cnic: cnic,
+            mobile: mobile,
+            area: area,
+            address: address,
+            status: 'Pending', // Default status
+            donor: 'N/A'       // Default donor
+        };
+
+        // Update state and storage
+        requests.push(newRequest);
+        localStorage.setItem('ration_requests', JSON.stringify(requests));
+
+        // UI Feedback
+        showFeedback('Request submitted successfully!', 'var(--success)');
+        this.reset();
+        toggleOtherArea(); // Reset hidden field state
+    });
+
+    function showFeedback(msg, color) {
+        const feedback = document.getElementById('formFeedback');
+        feedback.textContent = msg;
+        feedback.style.color = color;
+        setTimeout(() => feedback.textContent = '', 3000);
+    }
+
+    /**
+     * DASHBOARD LOGIC
+     */
+    function renderTable(data) {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+
+        if (data.length === 0) {
+            document.getElementById('noDataMsg').classList.remove('hidden');
+            return;
+        } else {
+            document.getElementById('noDataMsg').classList.add('hidden');
+        }
+
+        data.forEach(req => {
+            const row = document.createElement('tr');
+            
+            // Set dynamic status badge class
+            const statusClass = `status-${req.status.toLowerCase()}`;
+            
+            row.innerHTML = `
+                <td>${req.cnic}</td>
+                <td>${req.mobile}</td>
+                <td>${req.area}</td>
+                <td>${req.address}</td>
+                <td><span class="badge ${statusClass}">${req.status}</span></td>
+                <td>${req.donor}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function filterTable() {
+        const cnicQuery = document.getElementById('searchCNIC').value.toLowerCase();
+        const mobileQuery = document.getElementById('searchMobile').value.toLowerCase();
+        
+        const filtered = requests.filter(req => {
+            return req.cnic.toLowerCase().includes(cnicQuery) && 
+                   req.mobile.toLowerCase().includes(mobileQuery);
+        });
+
+        renderTable(filtered);
+    }
+</script>
+
+</body>
+</html>
