@@ -1,1 +1,143 @@
-efefe
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branch Dashboard</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --border: #e5e7eb;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls { display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; margin-bottom: 20px; }
+        input { padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
+        th { background: #f9fafb; font-weight: 600; white-space: nowrap; }
+
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        .status-pending { background: #fee2e2; color: #991b1b; }
+        .status-assigned { background: #fef3c7; color: #92400e; }
+        .status-fulfilled { background: #d1fae5; color: #065f46; }
+
+        .btn-clear { background: #6b7280; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; }
+        .nav-link { color: var(--primary); text-decoration: none; font-weight: 500; }
+
+        @media (max-width: 600px) {
+            .controls { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Admin Dashboard</h1>
+        <a href="index.html" class="nav-link">← Back to Form</a>
+    </header>
+
+    <div class="card">
+        <div class="controls">
+            <input type="text" id="searchCNIC" placeholder="Filter by CNIC..." onkeyup="filterTable()">
+            <input type="text" id="searchMobile" placeholder="Filter by Mobile..." onkeyup="filterTable()">
+            <button class="btn-clear" onclick="clearFilters()">Reset</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <!-- Added Name Column -->
+                        <th>Name</th>
+                        <th>CNIC</th>
+                        <th>Mobile</th>
+                        <th>Area</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Donor</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <div id="noDataMsg" style="display:none; text-align: center; padding: 30px; color: #666;">
+            No records found.
+        </div>
+    </div>
+</div>
+
+<script>
+    let requests = [];
+
+    function loadData() {
+        requests = JSON.parse(localStorage.getItem('ration_requests')) || [];
+        renderTable(requests);
+    }
+
+    function renderTable(data) {
+        const tbody = document.getElementById('tableBody');
+        const msg = document.getElementById('noDataMsg');
+        tbody.innerHTML = '';
+
+        if (data.length === 0) {
+            msg.style.display = 'block';
+            return;
+        }
+        msg.style.display = 'none';
+
+        data.forEach(req => {
+            const row = document.createElement('tr');
+            // Added req.fullName to the row
+            row.innerHTML = `
+                <td><strong>${req.fullName || '-'}</strong></td>
+                <td style="font-family: monospace;">${req.cnic}</td>
+                <td>${req.mobile}</td>
+                <td>${req.area}</td>
+                <td>${req.address}</td>
+                <td><span class="badge status-${req.status.toLowerCase()}">${req.status}</span></td>
+                <td>${req.donor}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function filterTable() {
+        const cnic = document.getElementById('searchCNIC').value.toLowerCase();
+        const mobile = document.getElementById('searchMobile').value.toLowerCase();
+        
+        const filtered = requests.filter(r => 
+            r.cnic.includes(cnic) && r.mobile.includes(mobile)
+        );
+        renderTable(filtered);
+    }
+
+    function clearFilters() {
+        document.getElementById('searchCNIC').value = '';
+        document.getElementById('searchMobile').value = '';
+        renderTable(requests);
+    }
+
+    // Initial load
+    window.onload = loadData;
+</script>
+
+</body>
+</html>
