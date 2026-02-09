@@ -34,33 +34,11 @@
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
         
         /* Segmented CNIC UI */
-        .cnic-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 5px;
-        }
-        .cnic-group {
-            display: flex;
-            gap: 4px;
-        }
-        .cnic-box {
-            width: 35px;
-            height: 45px;
-            text-align: center;
-            padding: 0;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: 2px solid var(--border);
-        }
-        .cnic-box:focus {
-            border-color: var(--primary);
-        }
-        .hyphen {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: #999;
-        }
+        .cnic-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+        .cnic-group { display: flex; gap: 4px; }
+        .cnic-box { width: 35px; height: 45px; text-align: center; padding: 0; font-size: 1.2rem; font-weight: bold; border: 2px solid var(--border); }
+        .cnic-box:focus { border-color: var(--primary); }
+        .hyphen { font-weight: bold; font-size: 1.5rem; color: #999; }
 
         .hidden { display: none; }
         
@@ -77,15 +55,7 @@
             margin-top: 10px;
         }
 
-        .nav-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
+        .nav-link { display: block; text-align: center; margin-top: 20px; color: var(--primary); text-decoration: none; font-weight: 500; }
         #formFeedback { margin-top: 15px; text-align: center; font-weight: bold; min-height: 24px; }
     </style>
 </head>
@@ -174,34 +144,23 @@
     const boxes = document.querySelectorAll('.cnic-box');
 
     boxes.forEach((box, index) => {
-        // Auto-focus next box on input
+        // Auto-focus next box
         box.addEventListener('input', (e) => {
             const val = e.target.value;
-            if (val.length === 1 && index < boxes.length - 1) {
-                boxes[index + 1].focus();
-            }
+            if (val.length === 1 && index < boxes.length - 1) boxes[index + 1].focus();
         });
 
         // Focus previous box on backspace
         box.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !box.value && index > 0) {
-                boxes[index - 1].focus();
-            }
+            if (e.key === 'Backspace' && !box.value && index > 0) boxes[index - 1].focus();
         });
 
-        // Handle Paste event for the first box
+        // Smart Paste
         box.addEventListener('paste', (e) => {
             e.preventDefault();
             const pasteData = (e.clipboardData || window.clipboardData).getData('text');
             const digits = pasteData.replace(/\D/g, '').split('');
-            
-            digits.forEach((digit, i) => {
-                if (boxes[i]) {
-                    boxes[i].value = digit;
-                }
-            });
-            
-            // Focus the last filled box or the next empty one
+            digits.forEach((digit, i) => { if (boxes[i]) boxes[i].value = digit; });
             const nextIdx = Math.min(digits.length, boxes.length - 1);
             boxes[nextIdx].focus();
         });
@@ -212,7 +171,6 @@
         const areaSelect = document.getElementById('area');
         const otherGroup = document.getElementById('otherAreaGroup');
         const otherInput = document.getElementById('otherArea');
-        
         if (areaSelect.value === 'Other') {
             otherGroup.classList.remove('hidden');
             otherInput.setAttribute('required', 'required');
@@ -225,12 +183,10 @@
     document.getElementById('rationForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Assemble CNIC from boxes
-        const cnicParts = [];
+        // Assemble CNIC
         const group1 = Array.from(document.querySelectorAll('#group1 .cnic-box')).map(b => b.value).join('');
         const group2 = Array.from(document.querySelectorAll('#group2 .cnic-box')).map(b => b.value).join('');
         const group3 = Array.from(document.querySelectorAll('#group3 .cnic-box')).map(b => b.value).join('');
-        
         const fullCnic = `${group1}-${group2}-${group3}`;
 
         const formData = new FormData(this);
@@ -242,10 +198,9 @@
         // Validation
         const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
         if (!cnicRegex.test(fullCnic)) return showFeedback('Please fill all CNIC boxes correctly.', 'var(--danger)');
-        
         if (!/^[0-9]{11}$/.test(mobile)) return showFeedback('Mobile must be 11 digits.', 'var(--danger)');
 
-        // Save Data
+        // Save Data (TODO: Replace with Supabase Insert)
         const requests = JSON.parse(localStorage.getItem('ration_requests')) || [];
         requests.push({
             id: Date.now(),
@@ -254,8 +209,8 @@
             mobile, 
             area, 
             address,
-            status: 'Pending',
-            donor: 'N/A'
+            status: 'Pending', // Initial status
+            donor: 'Unassigned' // Default donor
         });
         localStorage.setItem('ration_requests', JSON.stringify(requests));
 
@@ -271,6 +226,5 @@
         setTimeout(() => f.textContent = '', 3000);
     }
 </script>
-
 </body>
 </html>
