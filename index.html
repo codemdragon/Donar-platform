@@ -49,7 +49,6 @@
             }
         }
 
-        /* ========= NAVIGATION ========= */
         nav {
             background: var(--primary-dark);
             color: white;
@@ -57,7 +56,7 @@
         }
 
         .nav-inner {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 14px 20px;
             display: flex;
@@ -71,11 +70,6 @@
             gap: 10px;
             font-size: 1.3rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-brand span {
-            font-size: 1.5rem;
         }
 
         #nav-actions {
@@ -89,7 +83,6 @@
             border-radius: 6px;
             border: none;
             cursor: pointer;
-            font-size: 0.85rem;
             font-weight: 600;
         }
 
@@ -98,45 +91,18 @@
             color: var(--primary-dark);
         }
 
-        .nav-btn-light:hover {
-            background: #e0e7ff;
-        }
-
-        .nav-btn-text {
-            background: transparent;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
-        .nav-btn-text:hover {
-            color: #bfdbfe;
-        }
-
         .nav-btn-danger {
             background: var(--danger);
             color: white;
         }
 
-        .nav-btn-danger:hover {
-            background: #b91c1c;
-        }
-
-        .nav-user-info {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        /* ========= MAIN CONTAINER ========= */
         .app-container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 30px 20px;
+            padding-bottom: 100px;
         }
 
-        /* ========= CARD ========= */
         .card {
             background: var(--card);
             padding: 25px;
@@ -144,31 +110,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* ========= FORM STYLES (from index.html) ========= */
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-container header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .form-container h1 {
-            font-size: 1.8rem;
-            color: var(--primary-dark);
-        }
-
-        .form-container h2 {
-            margin-top: 0;
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: var(--primary-dark);
-        }
-
+        /* Form Styling */
         .form-group {
             margin-bottom: 15px;
         }
@@ -186,18 +128,8 @@
             padding: 12px;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: 1rem;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* Segmented CNIC UI */
         .cnic-container {
             display: flex;
             align-items: center;
@@ -214,115 +146,25 @@
             width: 35px;
             height: 45px;
             text-align: center;
-            padding: 0;
             font-size: 1.2rem;
             font-weight: bold;
             border: 2px solid var(--border);
             border-radius: 6px;
         }
 
-        .cnic-box:focus {
-            border-color: var(--primary);
-        }
-
-        .hyphen {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: #999;
-        }
-
-        button.submit-btn {
+        .submit-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 12px;
             border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
             width: 100%;
             font-weight: bold;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-
-        button.submit-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .form-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
             cursor: pointer;
+            margin-top: 10px;
         }
 
-        .form-link:hover {
-            text-decoration: underline;
-        }
-
-        #formFeedback {
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-            min-height: 24px;
-        }
-
-        /* ========= LOGIN STYLES ========= */
-        .login-container {
-            max-width: 380px;
-            margin: 0 auto;
-        }
-
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.5rem;
-        }
-
-        .demo-creds {
-            margin-top: 25px;
-            padding: 12px;
-            background: #fefce8;
-            font-size: 0.8rem;
-            color: #854d0e;
-            border-radius: 8px;
-            border: 1px solid #fde68a;
-        }
-
-        .demo-creds p {
-            margin: 2px 0;
-        }
-
-        .demo-creds .mono {
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-        }
-
-        /* ========= DASHBOARD STYLES (from dashboard.html) ========= */
-        .dash-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .dash-header h2 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
-
-        .dash-header .subtitle {
-            font-size: 0.9rem;
-            color: #6b7280;
-            margin-top: 2px;
-        }
-
-        /* Stats Cards */
+        /* Dashboard Styles */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -334,59 +176,46 @@
             background: white;
             padding: 16px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #ccc;
         }
 
         .stat-card.yellow {
-            border-left: 4px solid var(--warning);
+            border-color: var(--warning);
         }
 
         .stat-card.green {
-            border-left: 4px solid var(--success);
+            border-color: var(--success);
         }
 
         .stat-card.blue {
-            border-left: 4px solid var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #6b7280;
+            border-color: var(--primary);
         }
 
         .stat-value {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-top: 4px;
         }
 
-        /* Controls / Filters */
         .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-bottom: 20px;
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
             align-items: center;
         }
 
         .controls input,
         .controls select {
+            flex: 1;
+            min-width: 150px;
             padding: 10px;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: 0.9rem;
         }
 
-        .controls input:focus,
-        .controls select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* Table */
         .table-container {
             overflow-x: auto;
         }
@@ -394,35 +223,30 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
+            min-width: 1000px;
         }
 
         th,
         td {
-            text-align: left;
             padding: 12px;
             border-bottom: 1px solid var(--border);
+            text-align: left;
             vertical-align: middle;
         }
 
         th {
             background: #f9fafb;
-            font-weight: 600;
-            white-space: nowrap;
-            font-size: 0.8rem;
-            text-transform: uppercase;
             color: #6b7280;
+            font-size: 0.7rem;
+            text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        /* Badges */
         .badge {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: bold;
-            text-transform: uppercase;
-            display: inline-block;
         }
 
         .status-pending {
@@ -442,23 +266,9 @@
 
         .status-denied {
             background: #374151;
-            color: #f3f4f6;
+            color: white;
         }
 
-        /* Duplicate Alert */
-        .duplicate-alert {
-            background: #fffbeb;
-            color: #92400e;
-            border: 1px solid #fcd34d;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            margin-left: 5px;
-            cursor: help;
-            white-space: nowrap;
-        }
-
-        /* Action Buttons */
         .action-btn {
             padding: 6px 12px;
             border-radius: 4px;
@@ -466,12 +276,6 @@
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-right: 5px;
-            transition: filter 0.15s;
-        }
-
-        .action-btn:hover {
-            filter: brightness(0.9);
         }
 
         .btn-accept {
@@ -484,48 +288,33 @@
             color: white;
         }
 
-        .btn-clear {
-            background: #6b7280;
+        /* Bulk Toolbar */
+        .bulk-toolbar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
             color: white;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-            font-size: 0.85rem;
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
         }
 
-        .btn-clear:hover {
-            background: #4b5563;
+        .bulk-toolbar.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -10px);
         }
 
-        .btn-reset-small {
-            padding: 4px 8px;
-            font-size: 0.7rem;
-        }
-
-        .status-select {
-            font-size: 0.8rem;
-            padding: 5px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-        }
-
-        .branch-select {
-            padding: 5px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            width: 100%;
-            font-size: 0.8rem;
-        }
-
-        .no-data-msg {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-        }
-
-        /* ========= MODAL STYLES ========= */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -552,38 +341,6 @@
             text-align: center;
         }
 
-        .modal h3 {
-            margin: 0 0 12px 0;
-            color: var(--danger);
-            font-size: 1.3rem;
-        }
-
-        .modal p {
-            color: #4b5563;
-            margin: 8px 0;
-        }
-
-        .modal-detail {
-            background: #f3f4f6;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 12px 0;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        .modal-detail p {
-            margin: 4px 0;
-        }
-
-        .modal-btns {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        /* ========= TOAST ========= */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -592,778 +349,447 @@
             color: white;
             padding: 14px 24px;
             border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transform: translateY(100px);
-            transition: transform 0.3s ease;
+            transition: 0.3s;
             z-index: 2000;
-            font-weight: 500;
         }
 
         .toast.show {
             transform: translateY(0);
-        }
-
-        /* ========= RESPONSIVE ========= */
-        @media (max-width: 800px) {
-            .controls {
-                grid-template-columns: 1fr;
-            }
-
-            .dash-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .app-container {
-                padding: 15px 10px;
-            }
-
-            .cnic-container {
-                gap: 3px;
-            }
-
-            .cnic-group {
-                gap: 2px;
-            }
-
-            .cnic-box {
-                width: 25px;
-                height: 34px;
-                font-size: 0.9rem;
-                border-width: 1px;
-            }
-
-            .hyphen {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .cnic-box {
-                width: 19px;
-                height: 28px;
-                font-size: 0.75rem;
-            }
-
-            .cnic-group {
-                gap: 1px;
-            }
-
-            .cnic-container {
-                gap: 2px;
-            }
-
-            .hyphen {
-                font-size: 0.8rem;
-            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- NAVIGATION -->
     <nav>
         <div class="nav-inner">
-            <div class="nav-brand">
-                <span>🤲</span>
-                <span>RationConnect</span>
-            </div>
-            <div id="nav-actions">
-                <!-- Dynamic Buttons injected via JS -->
-            </div>
+            <div class="nav-brand">🤲 RationConnect</div>
+            <div id="nav-actions"></div>
         </div>
     </nav>
 
-    <!-- MAIN CONTAINER -->
-    <div class="app-container" id="app-container">
-
-        <!-- =========================== -->
-        <!-- VIEW 1: PUBLIC REQUEST FORM -->
-        <!-- =========================== -->
-        <div id="view-request" class="form-container fade-in">
-            <header>
-                <h1>Ration Distribution</h1>
-            </header>
-
-            <div class="card">
-                <h2>Requester Registration</h2>
-                <form id="requestForm">
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" name="fullName" placeholder="Enter full name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>CNIC Number (Mandatory)</label>
-                        <div class="cnic-container" id="cnicInputGroup">
-                            <!-- Group 1: 5 boxes -->
-                            <div class="cnic-group" id="group1">
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                            </div>
-                            <span class="hyphen">-</span>
-                            <!-- Group 2: 7 boxes -->
-                            <div class="cnic-group" id="group2">
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
-                            </div>
-                            <span class="hyphen">-</span>
-                            <!-- Group 3: 1 box -->
-                            <div class="cnic-group" id="group3">
-                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                    required>
+    <div class="app-container">
+        <!-- PUBLIC REQUEST VIEW -->
+        <div id="view-request" class="fade-in">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h1 style="text-align: center; margin-bottom: 20px; color: var(--primary-dark);">Request Ration</h1>
+                <div class="card">
+                    <form id="requestForm">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CNIC Number</label>
+                            <div class="cnic-container">
+                                <div class="cnic-group" id="g1"><input type="text" class="cnic-box" maxlength="1"
+                                        required><input type="text" class="cnic-box" maxlength="1" required><input
+                                        type="text" class="cnic-box" maxlength="1" required><input type="text"
+                                        class="cnic-box" maxlength="1" required><input type="text" class="cnic-box"
+                                        maxlength="1" required></div>
+                                <span>-</span>
+                                <div class="cnic-group" id="g2"><input type="text" class="cnic-box" maxlength="1"
+                                        required><input type="text" class="cnic-box" maxlength="1" required><input
+                                        type="text" class="cnic-box" maxlength="1" required><input type="text"
+                                        class="cnic-box" maxlength="1" required><input type="text" class="cnic-box"
+                                        maxlength="1" required><input type="text" class="cnic-box" maxlength="1"
+                                        required><input type="text" class="cnic-box" maxlength="1" required></div>
+                                <span>-</span>
+                                <div class="cnic-group" id="g3"><input type="text" class="cnic-box" maxlength="1"
+                                        required></div>
                             </div>
                         </div>
-                        <small style="color: #666; font-size: 0.8rem; margin-top: 8px; display: block;">Format:
-                            42101-1234567-1</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mobile">Mobile Number (11 digits)</label>
-                        <input type="text" id="mobile" name="mobile" placeholder="e.g. 03001234567" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="area">Select Area</label>
-                        <select id="area" name="area" onchange="toggleOtherArea()" required>
-                            <option value="">-- Select Area --</option>
-                            <option value="DHA">DHA</option>
-                            <option value="Clifton">Clifton</option>
-                            <option value="Tariq Road">Tariq Road</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div id="otherAreaGroup" class="form-group hidden">
-                        <label for="otherArea">Please specify Area</label>
-                        <input type="text" id="otherArea" name="otherArea">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Complete Home Address</label>
-                        <textarea id="address" name="address" rows="3" required></textarea>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Submit Request</button>
-                </form>
-                <div id="formFeedback"></div>
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <input type="text" id="mobile" placeholder="03001234567" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Area</label>
+                            <select id="area" required>
+                                <option value="DHA">DHA</option>
+                                <option value="Clifton">Clifton</option>
+                                <option value="Tariq Road">Tariq Road</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="address" rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Request</button>
+                    </form>
+                </div>
+                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('login')"
+                        style="color:var(--primary);">Branch Login →</a></p>
             </div>
-
-            <a href="#" onclick="app.switchView('login')" class="form-link">Branch/Admin Login →</a>
         </div>
 
-        <!-- =========================== -->
-        <!-- VIEW 2: LOGIN SCREEN        -->
-        <!-- =========================== -->
-        <div id="view-login" class="login-container hidden fade-in">
-            <div class="card">
-                <h2>System Login</h2>
+        <!-- LOGIN VIEW -->
+        <div id="view-login" class="hidden fade-in">
+            <div style="max-width: 380px; margin: 0 auto;" class="card">
+                <h2 style="text-align: center; margin-bottom: 20px;">Staff Login</h2>
                 <form id="loginForm">
-                    <div class="form-group">
-                        <label>Branch ID / Username</label>
-                        <input type="text" id="login_id" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="login_pass" required>
-                    </div>
-                    <button type="submit" class="submit-btn" style="background: #1f2937;">Login</button>
+                    <div class="form-group"><label>Username</label><input type="text" id="user" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" id="pass" required></div>
+                    <button type="submit" class="submit-btn" style="background:#1f2937;">Login</button>
                 </form>
-                <a href="#" onclick="app.switchView('request')" class="form-link">← Back to Request Form</a>
-
-                <!-- Demo Credentials -->
-                <div class="demo-creds">
-                    <p><strong>Demo Credentials:</strong></p>
-                    <p>Admin: <span class="mono">admin / admin</span></p>
-                    <p>Branch DHA: <span class="mono">b1 / pass</span></p>
-                    <p>Branch Clifton: <span class="mono">b2 / pass</span></p>
-                </div>
+                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('request')">←
+                        Back</a></p>
             </div>
         </div>
 
-        <!-- =========================== -->
-        <!-- VIEW 3: DASHBOARD           -->
-        <!-- =========================== -->
+        <!-- DASHBOARD VIEW -->
         <div id="view-dashboard" class="hidden fade-in">
-            <div class="dash-header">
-                <div>
-                    <h2 id="dash-title">Dashboard</h2>
-                    <div class="subtitle" id="dash-subtitle">Manage requests</div>
-                </div>
-            </div>
-
-            <!-- Stats Cards -->
             <div class="stats-grid">
                 <div class="stat-card yellow">
-                    <div class="stat-label">Pending Requests</div>
-                    <div class="stat-value" id="stat-pending">0</div>
+                    <div>Pending</div>
+                    <div class="stat-value" id="s-pending">0</div>
                 </div>
                 <div class="stat-card green">
-                    <div class="stat-label">Accepted by Me</div>
-                    <div class="stat-value" id="stat-approved-me">0</div>
+                    <div>My Approvals</div>
+                    <div class="stat-value" id="s-mine">0</div>
                 </div>
                 <div class="stat-card blue">
-                    <div class="stat-label">Total Distributed</div>
-                    <div class="stat-value" id="stat-total">0</div>
+                    <div>Total Distributed</div>
+                    <div class="stat-value" id="s-total">0</div>
                 </div>
             </div>
 
             <div class="card">
-                <!-- Filter Controls -->
                 <div class="controls">
-                    <input type="text" id="searchCNIC" placeholder="Filter by CNIC..." onkeyup="filterTable()">
-                    <input type="text" id="searchMobile" placeholder="Filter by Mobile..." onkeyup="filterTable()">
-                    <select id="searchArea" onchange="filterTable()">
+                    <input type="text" id="f-cnic" placeholder="Filter CNIC..." onkeyup="app.filter()">
+                    <input type="text" id="f-mobile" placeholder="Filter Mobile..." onkeyup="app.filter()">
+                    <select id="f-area" onchange="app.filter()">
                         <option value="">All Areas</option>
                         <option value="DHA">DHA</option>
                         <option value="Clifton">Clifton</option>
                         <option value="Tariq Road">Tariq Road</option>
-                        <option value="Other">Other</option>
+                        <option value="Others">Others</option>
                     </select>
-                    <button class="btn-clear" onclick="clearFilters()">Reset Filters</button>
+                    <button class="action-btn" onclick="app.resetFilters()"
+                        style="background:#6b7280; color:white; padding:10px 20px;">Reset Filters</button>
                 </div>
 
-                <!-- Data Table -->
                 <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>CNIC</th>
-                                <th>Mobile</th>
-                                <th>Area</th>
-                                <th>Address</th>
-                                <th>Status</th>
-                                <th>Assigned Branch</th>
-                                <th>Actions</th>
-                            </tr>
+                    <table id="dashTable">
+                        <thead id="tableHead">
+                            <!-- Dynamic Headings Based on Role -->
                         </thead>
                         <tbody id="tableBody"></tbody>
                     </table>
                 </div>
-                <div id="noDataMsg" class="no-data-msg hidden">
-                    No records found for this view.
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="toast">
-        <span id="toast-msg">Notification</span>
+    <!-- BULK ACTIONS -->
+    <div id="bulkToolbar" class="bulk-toolbar">
+        <span id="bulkCount">0 selected</span>
+        <button class="action-btn btn-accept" onclick="app.bulkAccept()">✓ Group Accept</button>
+        <button class="action-btn" onclick="app.clearSelection()"
+            style="background:transparent; color:white; border:1px solid white;">Cancel</button>
     </div>
 
-    <!-- CONFIRMATION / DUPLICATE MODAL -->
+    <!-- MODAL -->
     <div id="confirmModal" class="modal-overlay">
         <div class="modal">
-            <h3 id="modalTitle">Possible Duplicate!</h3>
-            <p id="modalBody">This CNIC or Mobile Number has already received rations.</p>
-            <div id="modalDetail" class="modal-detail hidden">
-                <p><strong>Previous Branch:</strong> <span id="dup-branch">-</span></p>
-                <p><strong>Date:</strong> <span id="dup-date">-</span></p>
-                <p><strong>Status:</strong> <span id="dup-status"
-                        style="color: var(--success); font-weight:700;">ACCEPTED</span></p>
-            </div>
-            <p id="modalQuestion" style="font-size: 0.9rem; color:#6b7280;">Are you sure you want to proceed?</p>
-            <div class="modal-btns">
-                <button class="btn-clear" onclick="closeModal()">Cancel</button>
-                <button id="modalConfirmBtn" class="action-btn btn-accept">Yes, Proceed</button>
+            <h3 style="color:var(--danger);">First Duplicate Found!</h3>
+            <p id="modalMsg" style="margin:15px 0; color:#4b5563;">This person already has an entry. Do you want to
+                allow this one? (Any further ones will be auto-rejected)</p>
+            <div style="display:flex; justify-content:center; gap:10px;">
+                <button class="action-btn" onclick="app.modalResolve(false)"
+                    style="background:#6b7280; color:white;">Deny</button>
+                <button class="action-btn btn-accept" onclick="app.modalResolve(true)">Allow This One</button>
             </div>
         </div>
     </div>
 
-    <!-- ========= JAVASCRIPT ========= -->
-    <script>
-        // ==========================================
-        // SUPABASE MIGRATION NOTES
-        // ==========================================
-        // See supabase_schema.txt for full SQL.
-        // Replace db.branches lookups with:
-        //   supabase.from('branches').select('*').eq('username', u).eq('password', p)
-        // Replace db.requests operations with:
-        //   supabase.from('requests').select('*')
-        //   supabase.from('requests').insert({...})
-        //   supabase.from('requests').update({status, accepted_by}).eq('id', id)
+    <div id="toast" class="toast"><span id="toastMsg"></span></div>
 
-        // --- MOCK DATABASE ---
+    <script>
+        // --- DATA ---
         const db = {
-            branches: [
-                { id: 'admin', username: 'admin', password: 'admin', name: 'Head Office', role: 'admin' },
-                { id: 'b1', username: 'b1', password: 'pass', name: 'Saylani DHA', role: 'branch' },
-                { id: 'b2', username: 'b2', password: 'pass', name: 'Saylani Clifton', role: 'branch' },
+            users: [
+                { id: 'admin', u: 'admin', p: 'admin', n: 'Head Office', r: 'admin' },
+                { id: 'b1', u: 'b1', p: 'pass', n: 'Saylani DHA', r: 'branch' },
+                { id: 'b2', u: 'b2', p: 'pass', n: 'Saylani Clifton', r: 'branch' }
             ],
-            requests: [
-                { id: 1, fullName: 'Asad Ali', cnic: '42101-1234567-1', mobile: '03001234567', area: 'DHA', address: 'House 5, Street 8, DHA Phase 6', status: 'Pending', branch_id: null, date: '2026-02-10' },
-                { id: 2, fullName: 'Fatima Khan', cnic: '42201-7654321-2', mobile: '03219876543', area: 'Clifton', address: 'Flat 3B, Block 9, Clifton', status: 'Assigned', branch_id: 'b1', date: '2026-02-09' },
-                { id: 3, fullName: 'Duplicate Test', cnic: '42201-7654321-2', mobile: '03009999999', area: 'Tariq Road', address: '12 Tariq Road, Karachi', status: 'Pending', branch_id: null, date: '2026-02-10' },
+            reqs: [
+                { id: 1, name: 'Ahmad Ali', cnic: '42101-1111111-1', mob: '03001111111', area: 'DHA', addr: 'Street 1, Phase 2', status: 'Pending', b_id: null, ts: '2023-10-25 09:15:02' },
+                { id: 2, name: 'Ahmad Ali', cnic: '42101-1111111-1', mob: '03001111111', area: 'DHA', addr: 'Street 1, Phase 2', status: 'Pending', b_id: null, ts: '2023-10-25 10:20:45' },
+                { id: 3, name: 'Sarah Khan', cnic: '42101-2222222-2', mob: '03002222222', area: 'Clifton', addr: 'Flat 402, Ocean View', status: 'Assigned', b_id: 'b2', ts: '2023-10-24 14:05:11' },
+                { id: 4, name: 'Zia Ul Haq', cnic: '42101-3333333-3', mob: '03003333333', area: 'Others', addr: 'Plot 44, Block A', status: 'Pending', b_id: null, ts: '2023-10-26 11:55:30' }
             ]
         };
 
-        // Available Branches for Assignment Dropdown
-        const availableBranches = ['Unassigned', 'Saylani DHA', 'Saylani Clifton'];
-
-        // --- CNIC BOXES LOGIC ---
-        function initCnicBoxes() {
-            const boxes = document.querySelectorAll('.cnic-box');
-            boxes.forEach((box, index) => {
-                box.addEventListener('input', (e) => {
-                    const val = e.target.value;
-                    if (val.length === 1 && index < boxes.length - 1) boxes[index + 1].focus();
-                });
-                box.addEventListener('keydown', (e) => {
-                    if (e.key === 'Backspace' && !box.value && index > 0) boxes[index - 1].focus();
-                });
-                box.addEventListener('paste', (e) => {
-                    e.preventDefault();
-                    const pasteData = (e.clipboardData || window.clipboardData).getData('text');
-                    const digits = pasteData.replace(/\D/g, '').split('');
-                    digits.forEach((digit, i) => { if (boxes[i]) boxes[i].value = digit; });
-                    const nextIdx = Math.min(digits.length, boxes.length - 1);
-                    boxes[nextIdx].focus();
-                });
-            });
-        }
-
-        // --- AREA TOGGLE ---
-        function toggleOtherArea() {
-            const areaSelect = document.getElementById('area');
-            const otherGroup = document.getElementById('otherAreaGroup');
-            const otherInput = document.getElementById('otherArea');
-            if (areaSelect.value === 'Other') {
-                otherGroup.classList.remove('hidden');
-                otherInput.setAttribute('required', 'required');
-            } else {
-                otherGroup.classList.add('hidden');
-                otherInput.removeAttribute('required');
-            }
-        }
-
-        // --- FORM FEEDBACK ---
-        function showFormFeedback(msg, color) {
-            const f = document.getElementById('formFeedback');
-            f.textContent = msg;
-            f.style.color = color;
-            setTimeout(() => f.textContent = '', 3000);
-        }
-
-        // --- APP STATE & LOGIC ---
         const app = {
             user: null,
-            currentView: 'request',
-            pendingAction: null,
+            selected: new Set(),
+            modalPromise: null,
 
             init() {
-                initCnicBoxes();
-                this.renderNav();
+                this.setupCnicAutoTab();
                 this.setupListeners();
                 this.switchView('request');
             },
 
-            // --- NAVIGATION & VIEWS ---
-            switchView(viewName) {
-                this.currentView = viewName;
+            setupCnicAutoTab() {
+                document.querySelectorAll('.cnic-box').forEach((box, i, all) => {
+                    box.oninput = () => { if (box.value && all[i + 1]) all[i + 1].focus(); };
+                    box.onkeydown = (e) => { if (e.key === 'Backspace' && !box.value && all[i - 1]) all[i - 1].focus(); };
+                });
+            },
+
+            setupListeners() {
+                document.getElementById('requestForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    const cnic = [...document.querySelectorAll('.cnic-box')].map(b => b.value).join('');
+                    const formattedCnic = `${cnic.slice(0, 5)}-${cnic.slice(5, 12)}-${cnic.slice(12)}`;
+
+                    const now = new Date();
+                    const ts = now.getFullYear() + '-' +
+                        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(now.getDate()).padStart(2, '0') + ' ' +
+                        String(now.getHours()).padStart(2, '0') + ':' +
+                        String(now.getMinutes()).padStart(2, '0') + ':' +
+                        String(now.getSeconds()).padStart(2, '0');
+
+                    db.reqs.unshift({
+                        id: Date.now(),
+                        name: document.getElementById('fullName').value,
+                        cnic: formattedCnic,
+                        mob: document.getElementById('mobile').value,
+                        area: document.getElementById('area').value,
+                        addr: document.getElementById('address').value,
+                        status: 'Pending',
+                        b_id: null,
+                        ts: ts
+                    });
+                    e.target.reset();
+                    this.showToast("Request Submitted!");
+                };
+
+                document.getElementById('loginForm').onsubmit = (e) => {
+                    e.preventDefault();
+                    const u = db.users.find(x => x.u === document.getElementById('user').value && x.p === document.getElementById('pass').value);
+                    if (u) { this.user = u; this.switchView('dashboard'); }
+                    else alert("Invalid Login");
+                };
+            },
+
+            switchView(v) {
                 document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-                document.getElementById(`view-${viewName}`).classList.remove('hidden');
-                if (viewName === 'dashboard') {
-                    this.renderDashboard();
+                document.getElementById('view-' + v).classList.remove('hidden');
+                if (v === 'dashboard') {
+                    this.renderTableHead();
+                    this.renderDash();
                 }
                 this.renderNav();
             },
 
             renderNav() {
                 const nav = document.getElementById('nav-actions');
-                if (this.user) {
-                    nav.innerHTML = `
-                        <span class="nav-user-info">Logged in as: <b>${this.user.name}</b></span>
-                        <button class="nav-btn-danger" onclick="app.logout()">Logout</button>
-                    `;
-                } else {
-                    nav.innerHTML = `
-                        <button class="nav-btn-text" onclick="app.switchView('request')">Request</button>
-                        <button class="nav-btn-light" onclick="app.switchView('login')">Login</button>
-                    `;
-                }
+                nav.innerHTML = this.user ?
+                    `<span>${this.user.n}</span><button class="nav-btn-danger" onclick="app.logout()">Logout</button>` :
+                    `<button class="nav-btn-light" onclick="app.switchView('login')">Staff Login</button>`;
             },
 
-            // --- AUTHENTICATION ---
-            login(username, password) {
-                const user = db.branches.find(u => u.username === username && u.password === password);
-                if (user) {
-                    this.user = user;
-                    this.switchView('dashboard');
-                    this.showToast(`Welcome back, ${user.name}`);
-                } else {
-                    alert('Invalid credentials');
-                }
-            },
+            logout() { this.user = null; this.switchView('login'); },
 
-            logout() {
-                this.user = null;
-                this.switchView('login');
-            },
+            getFilteredData() {
+                const cTerm = document.getElementById('f-cnic').value.toLowerCase();
+                const mTerm = document.getElementById('f-mobile').value.toLowerCase();
+                const aTerm = document.getElementById('f-area').value;
 
-            // --- SUBMIT REQUEST ---
-            submitRequest(data) {
-                // In Supabase: await supabase.from('requests').insert(data)
-                const newId = Date.now();
-                db.requests.unshift({
-                    id: newId,
-                    ...data,
-                    status: 'Pending',
-                    branch_id: null,
-                    date: new Date().toISOString().split('T')[0]
+                return db.reqs.filter(r => {
+                    // Branch Visibility Logic: 
+                    // 1. Admins see everything
+                    // 2. Regular branches see ONLY 'Pending' OR requests they accepted (b_id === user.id)
+                    if (this.user.r !== 'admin') {
+                        const isVisible = r.status === 'Pending' || r.b_id === this.user.id;
+                        if (!isVisible) return false;
+                    }
+
+                    return r.cnic.includes(cTerm) &&
+                        r.mob.includes(mTerm) &&
+                        (aTerm === '' || r.area === aTerm);
                 });
-
-                document.getElementById('requestForm').reset();
-                // Clear CNIC boxes
-                document.querySelectorAll('.cnic-box').forEach(b => b.value = '');
-                toggleOtherArea();
-                this.showToast('Request submitted successfully!');
-                showFormFeedback('Request submitted successfully!', 'var(--success)');
             },
 
-            // --- DUPLICATE DETECTION ---
-            // Returns true if this request is pending AND there's already an
-            // accepted/assigned/fulfilled request with the same CNIC or mobile
-            isDuplicateOf(req) {
-                if (req.status !== 'Pending') return null; // only flag pending ones
-                const acceptedStatuses = ['Assigned', 'Fulfilled'];
-                return db.requests.find(r =>
-                    r.id !== req.id &&
-                    acceptedStatuses.includes(r.status) &&
-                    (r.cnic === req.cnic || r.mobile === req.mobile)
-                ) || null;
+            renderTableHead() {
+                const head = document.getElementById('tableHead');
+                const isAdmin = this.user.r === 'admin';
+
+                head.innerHTML = `
+                    <tr>
+                        <th style="width:40px;"><input type="checkbox" id="selectAll" onchange="app.toggleFiltered(this)"></th>
+                        <th>Name</th>
+                        <th>CNIC</th>
+                        <th>Mobile</th>
+                        <th>Area</th>
+                        <th style="width: 150px;">Address</th>
+                        <th>Status</th>
+                        ${isAdmin ? '<th>Assigned Branch</th>' : ''}
+                        <th>Actions</th>
+                        <th>Timestamp</th>
+                    </tr>
+                `;
             },
 
-            getBranchName(id) {
-                const b = db.branches.find(b => b.id === id);
-                return b ? b.name : 'Unassigned';
-            },
+            renderDash() {
+                const body = document.getElementById('tableBody');
+                body.innerHTML = '';
 
-            // --- DASHBOARD RENDER ---
-            renderDashboard() {
-                if (!this.user) return;
-                const currentRole = this.user.role;
-                const currentBranchId = this.user.id;
+                const filtered = this.getFilteredData();
+                const isAdmin = this.user.r === 'admin';
 
-                document.getElementById('dash-title').innerText = currentRole === 'admin' ? 'Admin Dashboard' : 'Branch Dashboard';
-                document.getElementById('dash-subtitle').innerText = this.user.name;
-
-                // Stats
-                const pendingCount = db.requests.filter(r => r.status === 'Pending').length;
-                const myCount = db.requests.filter(r => r.branch_id === currentBranchId && (r.status === 'Assigned' || r.status === 'Fulfilled')).length;
-                const totalDistributed = db.requests.filter(r => r.status === 'Assigned' || r.status === 'Fulfilled').length;
-                document.getElementById('stat-pending').innerText = pendingCount;
-                document.getElementById('stat-approved-me').innerText = myCount;
-                document.getElementById('stat-total').innerText = totalDistributed;
-
-                // Determine visible data based on role
-                let viewData = db.requests;
-                if (currentRole !== 'admin') {
-                    // Branch sees: Pending (all) + Assigned/Fulfilled by this branch
-                    viewData = db.requests.filter(r =>
-                        r.status === 'Pending' || r.branch_id === currentBranchId
-                    );
-                }
-
-                this.renderTableData(viewData);
-            },
-
-            renderTableData(data) {
-                const tbody = document.getElementById('tableBody');
-                const msg = document.getElementById('noDataMsg');
-                tbody.innerHTML = '';
-
-                if (data.length === 0) {
-                    msg.classList.remove('hidden');
-                    return;
-                }
-                msg.classList.add('hidden');
-
-                const currentRole = this.user.role;
-                const currentBranchId = this.user.id;
-
-                data.forEach(req => {
-                    const duplicateMatch = this.isDuplicateOf(req);
-                    const isDuplicate = duplicateMatch !== null;
-                    const row = document.createElement('tr');
-
-                    // Branch HTML
-                    let branchHtml = '';
-                    if (currentRole === 'admin') {
-                        branchHtml = `<select class="branch-select" onchange="app.updateBranch(${req.id}, this.value)">`;
-                        availableBranches.forEach(b => {
-                            const branchName = this.getBranchName(req.branch_id);
-                            branchHtml += `<option value="${b}" ${branchName === b ? 'selected' : ''}>${b}</option>`;
-                        });
-                        branchHtml += `</select>`;
-                    } else {
-                        branchHtml = `<strong>${this.getBranchName(req.branch_id)}</strong>`;
-                    }
-
-                    // Status HTML
-                    let statusHtml = '';
-                    if (currentRole === 'admin') {
-                        statusHtml = `<select class="status-select" onchange="app.updateStatus(${req.id}, this.value)">`;
-                        ['Pending', 'Assigned', 'Fulfilled', 'Denied'].forEach(s => {
-                            statusHtml += `<option value="${s}" ${req.status === s ? 'selected' : ''}>${s}</option>`;
-                        });
-                        statusHtml += `</select>`;
-                    } else {
-                        const statusClass = 'status-' + req.status.toLowerCase();
-                        statusHtml = `<span class="badge ${statusClass}">${req.status}</span>`;
-                    }
-
-                    // Actions HTML
-                    let actionsHtml = this.generateActionButtons(req);
-
-                    row.innerHTML = `
+                filtered.forEach(r => {
+                    const branchName = r.b_id ? (db.users.find(u => u.id === r.b_id)?.n || 'Unknown') : '—';
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${r.status === 'Pending' ? `<input type="checkbox" data-id="${r.id}" ${this.selected.has(r.id) ? 'checked' : ''} onchange="app.toggle(${r.id})">` : ''}</td>
+                        <td style="font-weight:bold;">${r.name}</td>
+                        <td style="font-family:monospace; font-size:0.8rem;">${r.cnic}</td>
+                        <td style="font-family:monospace; font-size:0.8rem;">${r.mob}</td>
+                        <td>${r.area}</td>
+                        <td style="font-size:0.75rem; color:#666;" title="${r.addr}">${r.addr.substring(0, 20)}${r.addr.length > 20 ? '...' : ''}</td>
+                        <td><span class="badge status-${r.status.toLowerCase()}">${r.status}</span></td>
+                        ${isAdmin ? `<td><small>${branchName}</small></td>` : ''}
                         <td>
-                            <strong>${req.fullName || '-'}</strong>
-                            ${isDuplicate ? `<span class="duplicate-alert" title="Possible multiple requests found">⚠ Duplicate</span>` : ''}
+                            ${r.status === 'Pending' ? `<button class="action-btn btn-accept" onclick="app.singleAccept(${r.id})">Accept</button>` : '—'}
                         </td>
-                        <td style="font-family: monospace;">${req.cnic}</td>
-                        <td>${req.mobile}</td>
-                        <td>${req.area || '-'}</td>
-                        <td title="${req.address}">${(req.address || '').substring(0, 20)}${(req.address || '').length > 20 ? '...' : ''}</td>
-                        <td>${statusHtml}</td>
-                        <td>${branchHtml}</td>
-                        <td>${actionsHtml}</td>
+                        <td style="font-size:0.7rem; color:#6b7280; white-space:nowrap;">${r.ts}</td>
                     `;
-                    tbody.appendChild(row);
+                    body.appendChild(tr);
                 });
+
+                document.getElementById('s-pending').innerText = db.reqs.filter(x => x.status === 'Pending').length;
+                document.getElementById('s-mine').innerText = db.reqs.filter(x => x.b_id === this.user.id).length;
+                document.getElementById('s-total').innerText = db.reqs.filter(x => x.status !== 'Pending' && x.status !== 'Denied').length;
+                this.updateToolbar();
             },
 
-            generateActionButtons(req) {
-                const currentRole = this.user.role;
+            // --- SELECTION LOGIC ---
+            toggle(id) {
+                if (this.selected.has(id)) this.selected.delete(id);
+                else this.selected.add(id);
+                this.updateToolbar();
+            },
 
-                // Admin: Accept or Deny pending requests
-                if (currentRole === 'admin' && req.status === 'Pending') {
-                    return `
-                        <button class="action-btn btn-accept" onclick="app.initiateAccept(${req.id})">Accept</button>
-                        <button class="action-btn btn-deny" onclick="app.handleAction(${req.id}, 'Denied')">Deny</button>
-                    `;
-                }
+            toggleFiltered(src) {
+                const filtered = this.getFilteredData();
+                const pendingFiltered = filtered.filter(r => r.status === 'Pending');
 
-                // Branch: Accept pending, Mark Fulfilled if assigned to them
-                if (currentRole !== 'admin') {
-                    if (req.status === 'Pending') {
-                        return `<button class="action-btn btn-accept" onclick="app.initiateAccept(${req.id})">Accept</button>`;
+                pendingFiltered.forEach(r => {
+                    if (src.checked) this.selected.add(r.id);
+                    else this.selected.delete(r.id);
+                });
+
+                this.renderDash();
+            },
+
+            clearSelection() {
+                this.selected.clear();
+                const sa = document.getElementById('selectAll');
+                if (sa) sa.checked = false;
+                this.renderDash();
+            },
+
+            updateToolbar() {
+                const bar = document.getElementById('bulkToolbar');
+                document.getElementById('bulkCount').innerText = `${this.selected.size} selected`;
+                if (this.selected.size > 0) bar.classList.add('visible');
+                else bar.classList.remove('visible');
+            },
+
+            // --- ACTIONS ---
+            filter() {
+                const sa = document.getElementById('selectAll');
+                if (sa) sa.checked = false;
+                this.renderDash();
+            },
+
+            resetFilters() {
+                document.getElementById('f-cnic').value = '';
+                document.getElementById('f-mobile').value = '';
+                document.getElementById('f-area').value = '';
+                const sa = document.getElementById('selectAll');
+                if (sa) sa.checked = false;
+                this.renderDash();
+            },
+
+            async bulkAccept() {
+                const items = Array.from(this.selected).map(id => db.reqs.find(r => r.id === id));
+                await this.processBatch(items);
+                this.clearSelection();
+            },
+
+            async singleAccept(id) {
+                const item = db.reqs.find(r => r.id === id);
+                await this.processBatch([item]);
+                this.renderDash();
+            },
+
+            async processBatch(items) {
+                const sessionAccepted = new Set();
+                const sessionWarned = new Set();
+
+                for (const item of items) {
+                    const key = item.cnic;
+                    const hasMainEntry = db.reqs.some(r => r.cnic === key && (r.status === 'Assigned' || r.status === 'Fulfilled'));
+
+                    if (!hasMainEntry && !sessionAccepted.has(key)) {
+                        this.commitAccept(item.id);
+                        sessionAccepted.add(key);
                     }
-                    if (req.status === 'Assigned' && req.branch_id === this.user.id) {
-                        return `<button class="action-btn btn-accept" onclick="app.handleAction(${req.id}, 'Fulfilled')">Mark Fulfilled</button>`;
+                    else if (!sessionWarned.has(key)) {
+                        document.getElementById('modalMsg').innerText = `Request for ${item.name} (${item.cnic}) is a duplicate. Allow this one? Others will be auto-rejected.`;
+                        const choice = await this.askUser();
+                        sessionWarned.add(key);
+
+                        if (choice) {
+                            this.commitAccept(item.id);
+                            sessionAccepted.add(key);
+                        } else {
+                            this.commitDeny(item.id);
+                        }
+                    }
+                    else {
+                        this.commitDeny(item.id);
                     }
                 }
-
-                // Default: Reset button (admin)
-                if (currentRole === 'admin' && req.status !== 'Pending') {
-                    return `<button class="btn-clear btn-reset-small" onclick="app.updateStatus(${req.id}, 'Pending')">Reset</button>`;
-                }
-
-                return `<span style="color:#9ca3af; font-size:0.8rem;">—</span>`;
+                this.showToast("Batch processed");
             },
 
-            // --- APPROVAL WORKFLOW ---
-            initiateAccept(reqId) {
-                const request = db.requests.find(r => r.id === reqId);
-
-                // Check for duplicates: same CNIC or mobile, already accepted/assigned, different ID
-                const duplicate = db.requests.find(r =>
-                    (r.cnic === request.cnic || r.mobile === request.mobile) &&
-                    (r.status === 'Assigned' || r.status === 'Fulfilled') &&
-                    r.id !== reqId
-                );
-
-                if (duplicate) {
-                    // Show Duplicate Warning Modal
-                    document.getElementById('modalTitle').textContent = 'Possible Duplicate!';
-                    document.getElementById('modalBody').textContent = 'This CNIC or Mobile Number has already received rations.';
-                    document.getElementById('modalDetail').classList.remove('hidden');
-                    document.getElementById('dup-branch').innerText = this.getBranchName(duplicate.branch_id);
-                    document.getElementById('dup-date').innerText = duplicate.date;
-                    document.getElementById('dup-status').innerText = duplicate.status.toUpperCase();
-                    document.getElementById('modalQuestion').textContent = 'Are you sure you want to approve this request again?';
-                    document.getElementById('modalConfirmBtn').textContent = 'Force Approve';
-                    document.getElementById('modalConfirmBtn').className = 'action-btn btn-deny';
-                    document.getElementById('modalConfirmBtn').onclick = () => {
-                        this.executeAccept(reqId);
-                        closeModal();
-                    };
-                    openModal();
-                } else {
-                    // Simple confirmation
-                    document.getElementById('modalTitle').textContent = 'Confirm Acceptance';
-                    document.getElementById('modalBody').textContent = `Accept ration request from ${request.fullName}?`;
-                    document.getElementById('modalDetail').classList.add('hidden');
-                    document.getElementById('modalQuestion').textContent = 'This will assign the request to your branch.';
-                    document.getElementById('modalConfirmBtn').textContent = 'Yes, Accept';
-                    document.getElementById('modalConfirmBtn').className = 'action-btn btn-accept';
-                    document.getElementById('modalConfirmBtn').onclick = () => {
-                        this.executeAccept(reqId);
-                        closeModal();
-                    };
-                    openModal();
-                }
+            commitAccept(id) {
+                const r = db.reqs.find(x => x.id === id);
+                if (r) { r.status = 'Assigned'; r.b_id = this.user.id; }
             },
 
-            executeAccept(reqId) {
-                const reqIndex = db.requests.findIndex(r => r.id === reqId);
-                if (reqIndex > -1) {
-                    db.requests[reqIndex].status = 'Assigned';
-                    db.requests[reqIndex].branch_id = this.user.id;
-                    this.showToast('Request Accepted ✓');
-                    this.renderDashboard();
-                }
+            commitDeny(id) {
+                const r = db.reqs.find(x => x.id === id);
+                if (r) { r.status = 'Denied'; r.b_id = this.user.id; }
             },
 
-            handleAction(id, newStatus) {
-                document.getElementById('modalTitle').textContent = `Confirm: ${newStatus}`;
-                document.getElementById('modalBody').textContent = `Change status to "${newStatus}"?`;
-                document.getElementById('modalDetail').classList.add('hidden');
-                document.getElementById('modalQuestion').textContent = '';
-                document.getElementById('modalConfirmBtn').textContent = 'Yes, Proceed';
-                document.getElementById('modalConfirmBtn').className = `action-btn ${newStatus === 'Denied' ? 'btn-deny' : 'btn-accept'}`;
-                document.getElementById('modalConfirmBtn').onclick = () => {
-                    this.updateStatus(id, newStatus);
-                    closeModal();
-                };
-                openModal();
+            askUser() {
+                document.getElementById('confirmModal').classList.add('active');
+                return new Promise(res => { this.modalPromise = res; });
             },
 
-            updateStatus(id, newStatus) {
-                // TODO: Replace with supabase.from('requests').update({status}).eq('id', id)
-                db.requests = db.requests.map(r => r.id === id ? { ...r, status: newStatus } : r);
-                this.renderDashboard();
+            modalResolve(val) {
+                document.getElementById('confirmModal').classList.remove('active');
+                if (this.modalPromise) this.modalPromise(val);
             },
 
-            updateBranch(id, newBranchName) {
-                // TODO: Replace with supabase.from('requests').update({accepted_by}).eq('id', id)
-                // Map branch name back to branch_id
-                const branch = db.branches.find(b => b.name === newBranchName);
-                const branchId = branch ? branch.id : null;
-                db.requests = db.requests.map(r => r.id === id ? { ...r, branch_id: branchId } : r);
-                this.renderDashboard();
-            },
-
-            // --- UTILS ---
-            setupListeners() {
-                // Request Form
-                document.getElementById('requestForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-
-                    // Assemble CNIC from segmented boxes
-                    const group1 = Array.from(document.querySelectorAll('#group1 .cnic-box')).map(b => b.value).join('');
-                    const group2 = Array.from(document.querySelectorAll('#group2 .cnic-box')).map(b => b.value).join('');
-                    const group3 = Array.from(document.querySelectorAll('#group3 .cnic-box')).map(b => b.value).join('');
-                    const fullCnic = `${group1}-${group2}-${group3}`;
-
-                    const fullName = document.getElementById('fullName').value.trim();
-                    const mobile = document.getElementById('mobile').value.trim();
-                    const areaSelect = document.getElementById('area');
-                    const area = areaSelect.value === 'Other' ? document.getElementById('otherArea').value.trim() : areaSelect.value;
-                    const address = document.getElementById('address').value.trim();
-
-                    // Validation
-                    const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
-                    if (!cnicRegex.test(fullCnic)) return showFormFeedback('Please fill all CNIC boxes correctly.', 'var(--danger)');
-                    if (!/^[0-9]{11}$/.test(mobile)) return showFormFeedback('Mobile must be 11 digits.', 'var(--danger)');
-
-                    this.submitRequest({ fullName, cnic: fullCnic, mobile, area, address });
-                });
-
-                // Login Form
-                document.getElementById('loginForm').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.login(
-                        document.getElementById('login_id').value,
-                        document.getElementById('login_pass').value
-                    );
-                });
-            },
-
-            showToast(msg) {
-                const toast = document.getElementById('toast');
-                document.getElementById('toast-msg').innerText = msg;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
+            showToast(m) {
+                const t = document.getElementById('toast');
+                document.getElementById('toastMsg').innerText = m;
+                t.classList.add('show');
+                setTimeout(() => t.classList.remove('show'), 2500);
             }
         };
 
-        // --- FILTERING (Dashboard) ---
-        function filterTable() {
-            if (!app.user) return;
-            const cnicTerm = document.getElementById('searchCNIC').value.toLowerCase();
-            const mobileTerm = document.getElementById('searchMobile').value.toLowerCase();
-            const areaTerm = document.getElementById('searchArea').value;
-
-            const currentRole = app.user.role;
-            const currentBranchId = app.user.id;
-
-            // Base data respecting role
-            let baseData = db.requests;
-            if (currentRole !== 'admin') {
-                // Branch: if searching, allow finding any record by CNIC/Mobile
-                if (cnicTerm || mobileTerm) {
-                    baseData = db.requests; // Search across all
-                } else {
-                    baseData = db.requests.filter(r =>
-                        r.status === 'Pending' || r.branch_id === currentBranchId
-                    );
-                }
-            }
-
-            // Apply filters
-            const filtered = baseData.filter(r =>
-                r.cnic.toLowerCase().includes(cnicTerm) &&
-                r.mobile.includes(mobileTerm) &&
-                (areaTerm === "" || r.area === areaTerm)
-            );
-
-            app.renderTableData(filtered);
-        }
-
-        function clearFilters() {
-            document.getElementById('searchCNIC').value = '';
-            document.getElementById('searchMobile').value = '';
-            document.getElementById('searchArea').value = '';
-            app.renderDashboard();
-        }
-
-        // --- MODAL HELPERS ---
-        function openModal() {
-            document.getElementById('confirmModal').classList.add('active');
-        }
-        function closeModal() {
-            document.getElementById('confirmModal').classList.remove('active');
-        }
-        window.onclick = function (event) {
-            if (event.target === document.getElementById('confirmModal')) closeModal();
-        }
-
-        // --- START APP ---
         app.init();
     </script>
 </body>
