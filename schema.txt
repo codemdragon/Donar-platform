@@ -1,0 +1,166 @@
+-- =============================================
+-- SUPABASE DATABASE SCHEMA FOR RATION APP
+-- =============================================
+-- Paste this into the Supabase SQL Editor to auto-create the database.
+-- 
+-- TABLES:
+--   1. branches  - Stores branch/admin login credentials and info
+--   2. requests  - Stores ration distribution requests from the public form
+--
+-- FLOW:
+--   - Public users submit requests via the form (inserts into 'requests')
+--   - Branches log in (lookup in 'branches') and see pending requests
+--   - On accepting, the branch_id is recorded and status changes to 'Assigned'
+--   - Admin sees everything; branches only see their own accepted + all pending
+--   - Duplicate detection: check if same CNIC or mobile already has an accepted/fulfilled request
+-- =============================================
+
+
+-- Enable UUID generation
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
+-- =============================================
+-- TABLE: branches
+-- =============================================
+CREATE TABLE branches (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,          -- Login username (e.g. 'b1', 'admin')
+    password TEXT NOT NULL,                 -- Plain text for demo; USE AUTH IN PRODUCTION
+    branch_name TEXT NOT NULL,              -- Display name (e.g. 'Saylani DHA')
+    contact_number TEXT,                    -- Branch contact for coordination
+    is_admin BOOLEAN DEFAULT FALSE,         -- TRUE = admin/superuser, FALSE = regular branch
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Seed data (matches demo credentials in HTML)
+INSERT INTO branches (username, password, branch_name, is_admin) VALUES
+    ('admin', 'admin', 'Head Office', TRUE),
+    ('b1', 'pass', 'Saylani DHA', FALSE),
+    ('b2', 'pass', 'Saylani Clifton', FALSE);
+
+
+-- =============================================
+-- TABLE: requests
+-- =============================================
+CREATE TABLE requests (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    full_name TEXT NOT NULL,                -- Requestor's full name
+    cnic TEXT NOT NULL,                     -- CNIC formatted: XXXXX-XXXXXXX-X
+    mobile TEXT NOT NULL,                   -- 11-digit mobile number
+    area TEXT NOT NULL,                     -- Area: DHA, Clifton, Tariq Road, or custom
+    address TEXT,                           -- Full home address
+    
+    -- Eligibility & Metadata
+    family_count INTEGER DEFAULT 1,         -- Number of family members
+    monthly_income INTEGER,                 -- Reported monthly income
+    
+    status TEXT DEFAULT 'Pending'           -- Pending | Assigned | Fulfilled | Denied
+        CHECK (status IN ('Pending', 'Assigned', 'Fulfilled', 'Denied')),
+    
+    accepted_by UUID REFERENCES branches(id) ON DELETE SET NULL, -- FK to branch
+    assigned_at TIMESTAMPTZ,                -- When it was accepted/assigned
+    notes TEXT                              -- Branch/Admin notes or reason for denial
+);
+
+-- Indexes for performance
+CREATE INDEX idx_requests_cnic ON requests(cnic);
+CREATE INDEX idx_requests_mobile ON requests(mobile);
+CREATE INDEX idx_requests_status ON requests(status);
+CREATE INDEX idx_requests_branch ON requests(accepted_by);
+
+
+-- =============================================
+-- ROW LEVEL SECURITY (RLS) POLICIES
+-- =============================================
+-- These ensure branches can only see/modify their own records,
+-- while admins can see everything.
+
+ALTER TABLE requests ENABLE ROW LEVEL SECURITY;
+
+-- 1. Public can submit requests
+CREATE POLICY "Public can submit requests"
+    ON requests FOR INSERT
+    WITH CHECK (true);
+
+-- 2. View Visibility:
+--    - Admin sees everything
+--    - Branch sees: [All Pending] OR [Assigned to them]
+CREATE POLICY "Visibility based on role"
+    ON requests FOR SELECT
+    USING (
+        status = 'Pending'
+        OR accepted_by = auth.uid()
+        OR EXISTS (
+            SELECT 1 FROM branches 
+            WHERE id = auth.uid() AND is_admin = true
+        )
+    );
+
+-- 3. Update Policy:
+--    - Admin can update anything
+--    - Branch can only update requests they have accepted
+CREATE POLICY "Updates restricted to owner or admin"
+    ON requests FOR UPDATE
+    USING (
+        accepted_by = auth.uid()
+        OR EXISTS (
+            SELECT 1 FROM branches 
+            WHERE id = auth.uid() AND is_admin = true
+        )
+    )
+    WITH CHECK (
+        accepted_by = auth.uid()
+        OR EXISTS (
+            SELECT 1 FROM branches 
+            WHERE id = auth.uid() AND is_admin = true
+        )
+    );
+
+-- 4. Delete Policy (Admin Only)
+CREATE POLICY "Only admins can delete"
+    ON requests FOR DELETE
+    USING (
+        EXISTS (
+            SELECT 1 FROM branches 
+            WHERE id = auth.uid() AND is_admin = true
+        )
+    );
+
+
+-- =============================================
+-- BRANCH MANAGEMENT POLICIES
+-- =============================================
+ALTER TABLE branches ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Admins can manage branches"
+    ON branches FOR ALL
+    USING (
+        EXISTS (
+            SELECT 1 FROM branches 
+            WHERE id = auth.uid() AND is_admin = true
+        )
+    );
+
+CREATE POLICY "Everyone can read branch info"
+    ON branches FOR SELECT
+    USING (true);
+
+
+-- =============================================
+-- USEFUL DASHBOARD QUERIES
+-- =============================================
+
+-- Duplicate check BEFORE accepting (looking for existing assignments)
+-- SELECT * FROM requests 
+--   WHERE (cnic = '<new_cnic>' OR mobile = '<new_mobile>') 
+--   AND status IN ('Assigned', 'Fulfilled') 
+--   AND id != '<incoming_request_id>';
+
+-- Stats for Branch Dashboard
+-- SELECT 
+--   COUNT(*) FILTER (WHERE status = 'Pending') as total_pending,
+--   COUNT(*) FILTER (WHERE accepted_by = auth.uid() AND status = 'Assigned') as my_active_tasks,
+--   COUNT(*) FILTER (WHERE accepted_by = auth.uid() AND status = 'Fulfilled') as my_total_distributed
+-- FROM requests;
