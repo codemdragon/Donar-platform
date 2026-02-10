@@ -1138,24 +1138,63 @@
                 },
 
                 async addBranch() {
-                    const name = document.getElementById('nb-name').value;
-                    const user = document.getElementById('nb-user').value;
-
-                    if (!name || !user) return this.showToast("Please fill all fields");
-
-                    const { error } = await this.supabaseClient.from('branches').insert({
-                        username: user,
-                        branch_name: name,
-                        is_admin: false
-                    });
-
-                    if (error) this.showToast("Failed to add branch: " + error.message);
-                    else {
+                    const name = document.getElementById('nb-name').value.trim();
+                    const user = document.getElementById('nb-user').value.trim();
+                    const pass = document.getElementById('nb-pass').value.trim();
+                    if (!name || !user) return this.showToast("Please fill branch name and username (email).");
+                    // Basic email check
+                    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRe.test(user)) return this.showToast("Please enter a valid email for the username.");
+                    // If no password provided, generate a random temporary password (10 chars)
+                    const password = pass || (() => {
+                        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+                        let s = '';
+                        for (let i = 0; i < 10; i++) s += chars[Math.floor(Math.random() * chars.length)];
+                        return s;
+                    })();
+                    // Disable button while working
+                    const btn = document.querySelector('#branchModal .btn-accept');
+                    const originalText = btn ? btn.textContent : null;
+                    if (btn) { btn.disabled = true; btn.textContent = 'Creating...'; }
+                    try {
+                        // Edge Function URL you deployed
+                        const fnUrl = 'https://jallpzdxdzgjkgjwcggt.functions.supabase.co/create-branch';
+                        // If you want the function to validate caller is an admin, uncomment the next line
+                        // and the Edge Function must validate Authorization header.
+                        // const authHeader = this.session?.access_token ? { 'Authorization': `Bearer ${this.session.access_token}` } : {};
+                        const resp = await fetch(fnUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // ...authHeader
+                            },
+                            body: JSON.stringify({
+                                branch_name: name,
+                                email: user,
+                                password: password
+                            })
+                        });
+                        const json = await resp.json().catch(() => ({}));
+                        if (!resp.ok) {
+                            console.error('create-branch error', json);
+                            const msg = json?.error || json?.message || resp.statusText || 'Unknown error';
+                            this.showToast('Failed to create branch: ' + msg);
+                            return;
+                        }
+                        // Success — clear inputs and refresh list
                         document.getElementById('nb-name').value = '';
                         document.getElementById('nb-user').value = '';
-
+                        document.getElementById('nb-pass').value = '';
+                        // Show success and (optionally) display temp password once to admin
+                        this.showToast(`Branch "${name}" added.`);
+                        // Optionally show credentials to admin in an alert (one-time)
+                        // alert(`Branch created\nEmail: ${user}\nPassword: ${password}`);
                         await this.showBranchManager();
-                        this.showToast(`Branch "${name}" Added`);
+                    } catch (err) {
+                        console.error('addBranch unexpected error', err);
+                        this.showToast('Unexpected error creating branch');
+                    } finally {
+                        if (btn) { btn.disabled = false; btn.textContent = originalText || '+ Add Branch Account'; }
                     }
                 },
 
