@@ -1046,14 +1046,16 @@
             },
 
             // --- DUPLICATE DETECTION ---
-            getDuplicates() {
-                const cnicCounts = {};
-                const mobileCounts = {};
-                db.requests.forEach(r => {
-                    cnicCounts[r.cnic] = (cnicCounts[r.cnic] || 0) + 1;
-                    mobileCounts[r.mobile] = (mobileCounts[r.mobile] || 0) + 1;
-                });
-                return { cnicCounts, mobileCounts };
+            // Returns true if this request is pending AND there's already an
+            // accepted/assigned/fulfilled request with the same CNIC or mobile
+            isDuplicateOf(req) {
+                if (req.status !== 'Pending') return null; // only flag pending ones
+                const acceptedStatuses = ['Assigned', 'Fulfilled'];
+                return db.requests.find(r =>
+                    r.id !== req.id &&
+                    acceptedStatuses.includes(r.status) &&
+                    (r.cnic === req.cnic || r.mobile === req.mobile)
+                ) || null;
             },
 
             getBranchName(id) {
@@ -1101,12 +1103,12 @@
                 }
                 msg.classList.add('hidden');
 
-                const { cnicCounts, mobileCounts } = this.getDuplicates();
                 const currentRole = this.user.role;
                 const currentBranchId = this.user.id;
 
                 data.forEach(req => {
-                    const isDuplicate = cnicCounts[req.cnic] > 1 || mobileCounts[req.mobile] > 1;
+                    const duplicateMatch = this.isDuplicateOf(req);
+                    const isDuplicate = duplicateMatch !== null;
                     const row = document.createElement('tr');
 
                     // Branch HTML
