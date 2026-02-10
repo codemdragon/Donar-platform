@@ -576,10 +576,15 @@
                 supabase: supabaseClient,
 
                 async init() {
+                    console.log("🚀 Initializing app...");
                     this.setupCnicAutoTab();
                     this.setupListeners();
 
+                    // Show request view immediately to prevent blank screen
+                    this.switchView('request');
+
                     this.supabase.auth.onAuthStateChange(async (event, session) => {
+                        console.log("🔐 Auth state changed:", event, session ? "Logged in" : "Logged out");
                         this.session = session;
                         if (session) {
                             await this.loadUserProfile();
@@ -590,36 +595,65 @@
                         }
                     });
 
-                    const { data: { session } } = await this.supabase.auth.getSession();
-                    if (session) {
-                        this.session = session;
-                        await this.loadUserProfile();
-                        this.switchView('dashboard');
-                    } else {
+                    try {
+                        const { data: { session }, error } = await this.supabase.auth.getSession();
+                        console.log("📋 Session check:", session ? "Found session" : "No session", error);
+                        
+                        if (error) {
+                            console.error("Session error:", error);
+                            this.switchView('request');
+                            return;
+                        }
+
+                        if (session) {
+                            this.session = session;
+                            await this.loadUserProfile();
+                            this.switchView('dashboard');
+                        } else {
+                            this.switchView('request');
+                        }
+                    } catch (err) {
+                        console.error("❌ Init error:", err);
                         this.switchView('request');
                     }
                 },
 
                 async loadUserProfile() {
-                    if (!this.session) return;
-                    const { data: profile, error } = await this.supabase
-                        .from('branch_profiles')
-                        .select('branch_id, branches(branch_name, is_admin)')
-                        .eq('user_id', this.session.user.id)
-                        .maybeSingle();
-
-                    if (error) {
-                        console.error('Profile load error:', error);
+                    if (!this.session) {
+                        console.log("⚠️ No session, skipping profile load");
                         return;
                     }
+                    
+                    console.log("👤 Loading user profile for:", this.session.user.id);
+                    
+                    try {
+                        const { data: profile, error } = await this.supabase
+                            .from('branch_profiles')
+                            .select('branch_id, branches(branch_name, is_admin)')
+                            .eq('user_id', this.session.user.id)
+                            .maybeSingle();
 
-                    if (profile) {
-                        this.user = {
-                            id: profile.branch_id,
-                            n: profile.branches?.branch_name ?? 'Branch',
-                            r: profile.branches?.is_admin ? 'admin' : 'branch',
-                            b_id: profile.branch_id
-                        };
+                        if (error) {
+                            console.error('❌ Profile load error:', error);
+                            this.showToast("Failed to load profile: " + error.message);
+                            return;
+                        }
+
+                        if (profile) {
+                            this.user = {
+                                id: profile.branch_id,
+                                n: profile.branches?.branch_name ?? 'Branch',
+                                r: profile.branches?.is_admin ? 'admin' : 'branch',
+                                b_id: profile.branch_id
+                            };
+                            console.log("✅ Profile loaded:", this.user);
+                        } else {
+                            console.log("⚠️ No profile found for user");
+                            this.showToast("No branch profile found for this account");
+                        }
+                    } catch (err) {
+                        console.error("❌ Profile load exception:", err);
+                        this.showToast("Error loading profile");
                     }
                 },
 
@@ -703,8 +737,21 @@
                 },
 
                 switchView(v) {
-                    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-                    document.getElementById('view-' + v).classList.remove('hidden');
+                    console.log("🔄 Switching to view:", v);
+                    
+                    // Hide all views
+                    document.querySelectorAll('[id^="view-"]').forEach(el => {
+                        el.classList.add('hidden');
+                    });
+                    
+                    // Show requested view
+                    const targetView = document.getElementById('view-' + v);
+                    if (targetView) {
+                        targetView.classList.remove('hidden');
+                    } else {
+                        console.error("❌ View not found:", 'view-' + v);
+                        return;
+                    }
 
                     if (v === 'dashboard') {
                         const role = this.user?.r || 'branch';
