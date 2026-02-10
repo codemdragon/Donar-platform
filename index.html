@@ -463,7 +463,8 @@
             <div style="max-width: 380px; margin: 0 auto;" class="card">
                 <h2 style="text-align: center; margin-bottom: 20px;">Staff Login</h2>
                 <form id="loginForm">
-                    <div class="form-group"><label>Username</label><input type="text" id="user" required></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="user"
+                            placeholder="admin@local.test" required></div>
                     <div class="form-group"><label>Password</label><input type="password" id="pass" required></div>
                     <button type="submit" class="submit-btn" style="background:#1f2937;">Login</button>
                 </form>
@@ -575,7 +576,7 @@
         // --- SUPABASE CONFIG ---
         const SUPABASE_URL = "https://jallpzdxdzgjkgjwcggt.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbGxwemR4ZHpnamtnandjZ2d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDg4MzMsImV4cCI6MjA4NjI4NDgzM30.9Kras0mPHTfMQUnVibuXv3YuGw_tXXwK896nw4Au7P0";
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const app = {
             user: null, // This will store { id, n, r, b_id }
@@ -587,7 +588,19 @@
                 this.setupCnicAutoTab();
                 this.setupListeners();
 
-                // Check current session
+                // Auth State Listener
+                supabase.auth.onAuthStateChange(async (event, session) => {
+                    this.session = session;
+                    if (session) {
+                        await this.loadUserProfile();
+                        this.switchView('dashboard');
+                    } else {
+                        this.user = null;
+                        this.switchView('request');
+                    }
+                });
+
+                // Check initial session
                 const { data: { session } } = await supabase.auth.getSession();
                 if (session) {
                     this.session = session;
@@ -600,17 +613,22 @@
 
             async loadUserProfile() {
                 if (!this.session) return;
-                const { data: profile } = await supabase
+                const { data: profile, error } = await supabase
                     .from('branch_profiles')
                     .select('branch_id, branches(branch_name, is_admin)')
                     .eq('user_id', this.session.user.id)
-                    .single();
+                    .maybeSingle();
+
+                if (error) {
+                    console.error('Profile load error:', error);
+                    return;
+                }
 
                 if (profile) {
                     this.user = {
                         id: profile.branch_id,
-                        n: profile.branches.branch_name,
-                        r: profile.branches.is_admin ? 'admin' : 'branch',
+                        n: profile.branches?.branch_name ?? 'Branch',
+                        r: profile.branches?.is_admin ? 'admin' : 'branch',
                         b_id: profile.branch_id
                     };
                 }
@@ -626,18 +644,23 @@
             setupListeners() {
                 document.getElementById('requestForm').onsubmit = async (e) => {
                     e.preventDefault();
+
+                    const mobile = document.getElementById('mobile').value.trim();
+                    if (!/^\d{11}$/.test(mobile)) return this.showToast("Invalid Mobile: Must be 11 digits");
+
                     const cnicArr = [...document.querySelectorAll('.cnic-box')].map(b => b.value);
                     const formattedCnic = `${cnicArr.slice(0, 5).join('')}-${cnicArr.slice(5, 12).join('')}-${cnicArr.slice(12).join('')}`;
+                    if (!/^\d{5}-\d{7}-\d{1}$/.test(formattedCnic)) return this.showToast("Invalid CNIC Format");
 
                     const { error } = await supabase.from('requests').insert({
                         full_name: document.getElementById('fullName').value,
                         cnic: formattedCnic,
-                        mobile: document.getElementById('mobile').value,
+                        mobile: mobile,
                         area: document.getElementById('area').value,
                         address: document.getElementById('address').value
                     });
 
-                    if (error) alert("Submission Failed: " + error.message);
+                    if (error) this.showToast("Submission Failed: " + error.message);
                     else {
                         e.target.reset();
                         this.showToast("Request Submitted!");
@@ -651,7 +674,7 @@
 
                     const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
 
-                    if (error) alert("Login Failed: " + error.message);
+                    if (error) this.showToast("Login Failed: " + error.message);
                     else {
                         this.session = data.session;
                         await this.loadUserProfile();
@@ -665,7 +688,8 @@
                 document.getElementById('view-' + v).classList.remove('hidden');
 
                 if (v === 'dashboard') {
-                    document.body.className = this.user.r === 'admin' ? 'is-admin' : '';
+                    const role = this.user?.r || 'branch';
+                    document.body.className = role === 'admin' ? 'is-admin' : '';
                     this.renderTableHead();
                     this.renderDash();
                 } else {
@@ -689,8 +713,8 @@
             },
 
             async getFilteredData() {
-                const cTerm = document.getElementById('f-cnic').value.toLowerCase();
-                const mTerm = document.getElementById('f-mobile').value.toLowerCase();
+                const cTerm = document.getElementById('f-cnic').value.trim();
+                const mTerm = document.getElementById('f-mobile').value.trim();
                 const aTerm = document.getElementById('f-area').value;
 
                 let query = supabase.from('requests').select('*');
@@ -699,13 +723,17 @@
                 if (mTerm) query = query.ilike('mobile', `%${mTerm}%`);
                 if (aTerm) query = query.eq('area', aTerm);
 
-                const { data, error } = await query.order('created_at', { ascending: false });
+                const { data, error } = await query.order('created_at', { ascending: false, nullsFirst: false });
+                if (error) {
+                    console.error("Filter error:", error);
+                    return [];
+                }
                 return data || [];
             },
 
             renderTableHead() {
                 const head = document.getElementById('tableHead');
-                const isAdmin = this.user.r === 'admin';
+                const isAdmin = this.user?.r === 'admin';
 
                 head.innerHTML = `
                     <tr>
@@ -728,7 +756,7 @@
                 body.innerHTML = '<tr><td colspan="10" style="text-align:center;">Loading...</td></tr>';
 
                 const filtered = await this.getFilteredData();
-                const isAdmin = this.user.r === 'admin';
+                const isAdmin = this.user?.r === 'admin';
 
                 // Fetch branch names for display (Admins might need this)
                 const { data: branches } = await supabase.from('branches').select('id, branch_name');
@@ -756,12 +784,20 @@
                     body.appendChild(tr);
                 });
 
-                // Update Stats (Real-time counts)
-                const { data: stats } = await supabase.rpc('get_dashboard_stats', { uid: this.user.id });
-                if (stats) {
-                    document.getElementById('s-pending').innerText = stats.pending_count || 0;
-                    document.getElementById('s-mine').innerText = stats.mine_count || 0;
-                    document.getElementById('s-total').innerText = stats.total_distributed || 0;
+                // Update Stats (Robust fallback using head counts)
+                try {
+                    const myId = this.user?.id || '00000000-0000-0000-0000-000000000000';
+                    const [pRes, mRes, tRes] = await Promise.all([
+                        supabase.from('requests').select('id', { count: 'exact', head: true }).eq('status', 'Pending'),
+                        supabase.from('requests').select('id', { count: 'exact', head: true }).eq('accepted_by', myId),
+                        supabase.from('requests').select('id', { count: 'exact', head: true }).in('status', ['Assigned', 'Fulfilled'])
+                    ]);
+
+                    document.getElementById('s-pending').innerText = pRes.count || 0;
+                    document.getElementById('s-mine').innerText = mRes.count || 0;
+                    document.getElementById('s-total').innerText = tRes.count || 0;
+                } catch (err) {
+                    console.error("Stats fetch error:", err);
                 }
 
                 this.updateToolbar();
@@ -774,8 +810,8 @@
                 this.updateToolbar();
             },
 
-            toggleFiltered(src) {
-                const filtered = this.getFilteredData();
+            async toggleFiltered(src) {
+                const filtered = await this.getFilteredData();
                 const pendingFiltered = filtered.filter(r => r.status === 'Pending');
 
                 pendingFiltered.forEach(r => {
@@ -783,7 +819,7 @@
                     else this.selected.delete(r.id);
                 });
 
-                this.renderDash();
+                await this.renderDash();
             },
 
             clearSelection() {
@@ -817,15 +853,33 @@
             },
 
             async bulkAccept() {
-                const items = Array.from(this.selected).map(id => db.reqs.find(r => r.id === id));
-                await this.processBatch(items);
+                const ids = Array.from(this.selected);
+                if (ids.length === 0) return;
+
+                const { data: items, error } = await supabase
+                    .from('requests')
+                    .select('*')
+                    .in('id', ids)
+                    .eq('status', 'Pending');
+
+                if (error) return this.showToast('Failed to fetch items: ' + error.message);
+
+                await this.processBatch(items || []);
                 this.clearSelection();
+                await this.renderDash();
             },
 
             async singleAccept(id) {
-                const item = db.reqs.find(r => r.id === id);
+                const { data: item, error } = await supabase
+                    .from('requests')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error) return this.showToast('Failed to fetch request: ' + error.message);
+
                 await this.processBatch([item]);
-                this.renderDash();
+                await this.renderDash();
             },
 
             async processBatch(items) {
@@ -869,24 +923,26 @@
             },
 
             async commitAccept(id) {
-                await supabase.from('requests').update({
+                const { error } = await supabase.from('requests').update({
                     status: 'Assigned',
-                    accepted_by: this.user.id
+                    accepted_by: this.user?.id
                 }).eq('id', id);
+                if (error) console.error("commitAccept error:", error);
             },
 
             async commitDeny(id) {
-                await supabase.from('requests').update({
+                const { error } = await supabase.from('requests').update({
                     status: 'Denied',
-                    accepted_by: this.user.id
+                    accepted_by: this.user?.id
                 }).eq('id', id);
+                if (error) console.error("commitDeny error:", error);
             },
 
             // --- ADMIN ACTIONS ---
             async deleteReq(id) {
                 if (!confirm("Are you sure you want to delete this permanent?")) return;
                 const { error } = await supabase.from('requests').delete().eq('id', id);
-                if (error) alert("Delete failed: " + error.message);
+                if (error) this.showToast("Delete failed: " + error.message);
                 else {
                     this.selected.delete(id);
                     await this.renderDash();
@@ -898,7 +954,7 @@
                 if (!confirm(`Delete ${this.selected.size} items?`)) return;
                 const ids = Array.from(this.selected);
                 const { error } = await supabase.from('requests').delete().in('id', ids);
-                if (error) alert("Bulk delete failed: " + error.message);
+                if (error) this.showToast("Bulk delete failed: " + error.message);
                 else {
                     this.clearSelection();
                     this.showToast("Deleted selected");
@@ -909,7 +965,7 @@
                 if (!confirm("This will delete ALL requests. Proceed?")) return;
                 // Note: RLS might require specific permissions or a custom RPC for 'delete all'
                 const { error } = await supabase.from('requests').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-                if (error) alert("Clear failed: " + error.message);
+                if (error) this.showToast("Clear failed: " + error.message);
                 else {
                     this.clearSelection();
                     this.showToast("Database Cleared");
@@ -922,7 +978,7 @@
 
                 const { data: branches, error } = await supabase.from('branches').select('*').neq('is_admin', true);
 
-                if (error) return alert("Failed to load branches");
+                if (error) return this.showToast("Failed to load branches");
 
                 list.innerHTML = '';
                 branches.forEach(u => {
@@ -935,8 +991,7 @@
                         </div>
                         <div style="display:flex; gap:5px;">
                             <input type="text" value="${u.username}" placeholder="User" id="u-user-${u.id}">
-                            <input type="text" value="${u.password}" placeholder="Pass" id="u-pass-${u.id}">
-                            <button class="action-btn btn-accept" style="padding:4px 8px;" onclick="app.saveBranch('${u.id}')">Save</button>
+                            <button class="action-btn btn-accept" style="padding:4px 8px;" onclick="app.saveBranch('${u.id}')">Update User</button>
                         </div>
                     `;
                     list.appendChild(div);
@@ -946,36 +1001,31 @@
 
             async saveBranch(id) {
                 const user = document.getElementById(`u-user-${id}`).value;
-                const pass = document.getElementById(`u-pass-${id}`).value;
 
                 const { error } = await supabase.from('branches').update({
-                    username: user,
-                    password: pass
+                    username: user
                 }).eq('id', id);
 
-                if (error) alert("Update failed: " + error.message);
+                if (error) this.showToast("Update failed: " + error.message);
                 else this.showToast(`Updated Branch`);
             },
 
             async addBranch() {
                 const name = document.getElementById('nb-name').value;
                 const user = document.getElementById('nb-user').value;
-                const pass = document.getElementById('nb-pass').value;
 
-                if (!name || !user || !pass) return alert("Please fill all fields");
+                if (!name || !user) return this.showToast("Please fill all fields");
 
                 const { error } = await supabase.from('branches').insert({
                     username: user,
-                    password: pass,
                     branch_name: name,
                     is_admin: false
                 });
 
-                if (error) alert("Failed to add branch: " + error.message);
+                if (error) this.showToast("Failed to add branch: " + error.message);
                 else {
                     document.getElementById('nb-name').value = '';
                     document.getElementById('nb-user').value = '';
-                    document.getElementById('nb-pass').value = '';
 
                     await this.showBranchManager(); // Refresh list
                     this.showToast(`Branch "${name}" Added`);
