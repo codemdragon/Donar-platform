@@ -546,7 +546,21 @@
     <div id="branchModal" class="modal-overlay">
         <div class="modal" style="max-width: 500px;">
             <h3>Branch Management</h3>
-            <div id="branchList" style="margin: 20px 0; max-height: 300px; overflow-y: auto; text-align: left;"></div>
+
+            <div
+                style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; border: 1px solid var(--border);">
+                <h4 style="margin-bottom:10px;">Add New Branch</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                    <input type="text" id="nb-name" placeholder="Branch Name (e.g. Edhi)"
+                        style="grid-column: span 2; padding:8px;">
+                    <input type="text" id="nb-user" placeholder="Username" style="padding:8px;">
+                    <input type="text" id="nb-pass" placeholder="Password" style="padding:8px;">
+                </div>
+                <button class="action-btn btn-accept" style="width:100%; margin-top:10px;" onclick="app.addBranch()">+
+                    Add Branch Account</button>
+            </div>
+
+            <div id="branchList" style="margin: 20px 0; max-height: 250px; overflow-y: auto; text-align: left;"></div>
             <div style="display:flex; justify-content:center; gap:10px;">
                 <button class="action-btn" onclick="document.getElementById('branchModal').classList.remove('active')"
                     style="background:#6b7280; color:white;">Close</button>
@@ -881,6 +895,31 @@
                     db.users[idx].p = pass;
                     this.showToast(`Updated ${db.users[idx].n}`);
                 }
+            },
+
+            addBranch() {
+                const name = document.getElementById('nb-name').value;
+                const user = document.getElementById('nb-user').value;
+                const pass = document.getElementById('nb-pass').value;
+
+                if (!name || !user || !pass) return alert("Please fill all fields");
+                if (db.users.some(u => u.u === user)) return alert("Username already exists");
+
+                const newId = 'b' + (db.users.length); // Simple ID generation
+                db.users.push({
+                    id: newId,
+                    u: user,
+                    p: pass,
+                    n: name,
+                    r: 'branch'
+                });
+
+                document.getElementById('nb-name').value = '';
+                document.getElementById('nb-user').value = '';
+                document.getElementById('nb-pass').value = '';
+
+                this.showBranchManager(); // Refresh list
+                this.showToast(`Branch "${name}" Added`);
             },
 
             askUser() {
