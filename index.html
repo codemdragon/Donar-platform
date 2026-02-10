@@ -1159,14 +1159,21 @@
                     try {
                         // Edge Function URL you deployed
                         const fnUrl = 'https://jallpzdxdzgjkgjwcggt.functions.supabase.co/create-branch';
-                        // If you want the function to validate caller is an admin, uncomment the next line
-                        // and the Edge Function must validate Authorization header.
-                        // const authHeader = this.session?.access_token ? { 'Authorization': `Bearer ${this.session.access_token}` } : {};
+
+                        // Get the latest session and token at the moment of the call (supabase-js v2)
+                        const { data: { session: currentSession } } = await this.supabaseClient.auth.getSession();
+
+                        const accessToken = currentSession?.access_token;
+                        if (!accessToken) {
+                            this.showToast('Admin session required to create branches. Please log in.');
+                            return;
+                        }
+
                         const resp = await fetch(fnUrl, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                // ...authHeader
+                                'Authorization': `Bearer ${accessToken}`
                             },
                             body: JSON.stringify({
                                 branch_name: name,
