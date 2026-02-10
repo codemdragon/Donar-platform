@@ -580,7 +580,7 @@
         // Use a local variable to avoid clashing with the global 'supabase' library if it exists
         const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         window.supabase = _supabase; // Attach instance to window
-        const supabase = _supabase; // Local shortcut
+        var supabase = window.supabase; // Make it accessible in local scope
 
         const app = {
             user: null, // This will store { id, n, r, b_id }
