@@ -4,41 +4,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ration Request Form</title>
+    <title>Ration Distribution System</title>
     <style>
         :root {
             --primary: #2563eb;
+            --primary-dark: #1e40af;
             --success: #059669;
             --bg: #f3f4f6;
             --card: #ffffff;
             --text: #1f2937;
             --border: #e5e7eb;
             --danger: #dc2626;
+            --warning: #f59e0b;
         }
 
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            margin: 0;
-            padding: 20px;
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 600px;
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ========= NAVIGATION ========= */
+        nav {
+            background: var(--primary-dark);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-inner {
+            max-width: 1300px;
             margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
+        .nav-brand span {
+            font-size: 1.5rem;
+        }
+
+        #nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #nav-actions button {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .nav-btn-light {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        .nav-btn-light:hover {
+            background: #e0e7ff;
+        }
+
+        .nav-btn-text {
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .nav-btn-text:hover {
+            color: #bfdbfe;
+        }
+
+        .nav-btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .nav-btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .nav-user-info {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* ========= MAIN CONTAINER ========= */
+        .app-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* ========= CARD ========= */
         .card {
             background: var(--card);
             padding: 25px;
@@ -46,27 +144,44 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
+        /* ========= FORM STYLES (from index.html) ========= */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-container header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+        }
+
+        .form-container h2 {
             margin-top: 0;
             font-size: 1.5rem;
             border-bottom: 2px solid var(--bg);
             padding-bottom: 10px;
             margin-bottom: 20px;
+            color: var(--primary-dark);
         }
 
         .form-group {
             margin-bottom: 15px;
         }
 
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
         }
 
-        input,
-        select,
-        textarea {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border);
@@ -74,9 +189,9 @@
             font-size: 1rem;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
@@ -103,6 +218,7 @@
             font-size: 1.2rem;
             font-weight: bold;
             border: 2px solid var(--border);
+            border-radius: 6px;
         }
 
         .cnic-box:focus {
@@ -113,10 +229,6 @@
             font-weight: bold;
             font-size: 1.5rem;
             color: #999;
-        }
-
-        .hidden {
-            display: none;
         }
 
         button.submit-btn {
@@ -130,15 +242,25 @@
             width: 100%;
             font-weight: bold;
             margin-top: 10px;
+            transition: background 0.2s;
         }
 
-        .nav-link {
+        button.submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .form-link {
             display: block;
             text-align: center;
             margin-top: 20px;
             color: var(--primary);
             text-decoration: none;
             font-weight: 500;
+            cursor: pointer;
+        }
+
+        .form-link:hover {
+            text-decoration: underline;
         }
 
         #formFeedback {
@@ -148,9 +270,354 @@
             min-height: 24px;
         }
 
+        /* ========= LOGIN STYLES ========= */
+        .login-container {
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .demo-creds {
+            margin-top: 25px;
+            padding: 12px;
+            background: #fefce8;
+            font-size: 0.8rem;
+            color: #854d0e;
+            border-radius: 8px;
+            border: 1px solid #fde68a;
+        }
+
+        .demo-creds p {
+            margin: 2px 0;
+        }
+
+        .demo-creds .mono {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        /* ========= DASHBOARD STYLES (from dashboard.html) ========= */
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dash-header h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .dash-header .subtitle {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card.yellow {
+            border-left: 4px solid var(--warning);
+        }
+
+        .stat-card.green {
+            border-left: 4px solid var(--success);
+        }
+
+        .stat-card.blue {
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #6b7280;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* Controls / Filters */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .controls input,
+        .controls select {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .controls input:focus,
+        .controls select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #6b7280;
+            letter-spacing: 0.05em;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-assigned {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-fulfilled {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-denied {
+            background: #374151;
+            color: #f3f4f6;
+        }
+
+        /* Duplicate Alert */
+        .duplicate-alert {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+            cursor: help;
+            white-space: nowrap;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+            transition: filter 0.15s;
+        }
+
+        .action-btn:hover {
+            filter: brightness(0.9);
+        }
+
+        .btn-accept {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-deny {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-clear {
+            background: #6b7280;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-clear:hover {
+            background: #4b5563;
+        }
+
+        .btn-reset-small {
+            padding: 4px 8px;
+            font-size: 0.7rem;
+        }
+
+        .status-select {
+            font-size: 0.8rem;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .branch-select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            width: 100%;
+            font-size: 0.8rem;
+        }
+
+        .no-data-msg {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+        /* ========= MODAL STYLES ========= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal h3 {
+            margin: 0 0 12px 0;
+            color: var(--danger);
+            font-size: 1.3rem;
+        }
+
+        .modal p {
+            color: #4b5563;
+            margin: 8px 0;
+        }
+
+        .modal-detail {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .modal-detail p {
+            margin: 4px 0;
+        }
+
+        .modal-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* ========= TOAST ========= */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1f2937;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            font-weight: 500;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        /* ========= RESPONSIVE ========= */
+        @media (max-width: 800px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
         @media (max-width: 480px) {
-            body {
-                padding: 10px;
+            .app-container {
+                padding: 15px 10px;
             }
 
             .cnic-container {
@@ -166,7 +633,6 @@
                 height: 34px;
                 font-size: 0.9rem;
                 border-width: 1px;
-                padding: 0;
             }
 
             .hyphen {
@@ -198,126 +664,290 @@
 
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Ration Distribution</h1>
-        </header>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <span>🤲</span>
+                <span>RationConnect</span>
+            </div>
+            <div id="nav-actions">
+                <!-- Dynamic Buttons injected via JS -->
+            </div>
+        </div>
+    </nav>
 
-        <div class="card">
-            <h2>Requester Registration</h2>
-            <form id="rationForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="Enter full name" required>
-                </div>
+    <!-- MAIN CONTAINER -->
+    <div class="app-container" id="app-container">
 
-                <div class="form-group">
-                    <label>CNIC Number (Mandatory)</label>
-                    <div class="cnic-container" id="cnicInputGroup">
-                        <!-- Group 1: 5 boxes -->
-                        <div class="cnic-group" id="group1">
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                        </div>
-                        <span class="hyphen">-</span>
-                        <!-- Group 2: 7 boxes -->
-                        <div class="cnic-group" id="group2">
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                        </div>
-                        <span class="hyphen">-</span>
-                        <!-- Group 3: 1 box -->
-                        <div class="cnic-group" id="group3">
-                            <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
-                                required>
-                        </div>
+        <!-- =========================== -->
+        <!-- VIEW 1: PUBLIC REQUEST FORM -->
+        <!-- =========================== -->
+        <div id="view-request" class="form-container fade-in">
+            <header>
+                <h1>Ration Distribution</h1>
+            </header>
+
+            <div class="card">
+                <h2>Requester Registration</h2>
+                <form id="requestForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter full name" required>
                     </div>
-                    <small style="color: #666; font-size: 0.8rem; margin-top: 8px; display: block;">Format:
-                        42101-1234567-1</small>
-                </div>
 
-                <div class="form-group">
-                    <label for="mobile">Mobile Number (11 digits)</label>
-                    <input type="text" id="mobile" name="mobile" placeholder="e.g. 03001234567" required>
-                </div>
+                    <div class="form-group">
+                        <label>CNIC Number (Mandatory)</label>
+                        <div class="cnic-container" id="cnicInputGroup">
+                            <!-- Group 1: 5 boxes -->
+                            <div class="cnic-group" id="group1">
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                            </div>
+                            <span class="hyphen">-</span>
+                            <!-- Group 2: 7 boxes -->
+                            <div class="cnic-group" id="group2">
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                            </div>
+                            <span class="hyphen">-</span>
+                            <!-- Group 3: 1 box -->
+                            <div class="cnic-group" id="group3">
+                                <input type="text" class="cnic-box" maxlength="1" pattern="[0-9]" inputmode="numeric"
+                                    required>
+                            </div>
+                        </div>
+                        <small style="color: #666; font-size: 0.8rem; margin-top: 8px; display: block;">Format:
+                            42101-1234567-1</small>
+                    </div>
 
-                <div class="form-group">
-                    <label for="area">Select Area</label>
-                    <select id="area" name="area" onchange="toggleOtherArea()" required>
-                        <option value="">-- Select Area --</option>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number (11 digits)</label>
+                        <input type="text" id="mobile" name="mobile" placeholder="e.g. 03001234567" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area">Select Area</label>
+                        <select id="area" name="area" onchange="toggleOtherArea()" required>
+                            <option value="">-- Select Area --</option>
+                            <option value="DHA">DHA</option>
+                            <option value="Clifton">Clifton</option>
+                            <option value="Tariq Road">Tariq Road</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div id="otherAreaGroup" class="form-group hidden">
+                        <label for="otherArea">Please specify Area</label>
+                        <input type="text" id="otherArea" name="otherArea">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Complete Home Address</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Request</button>
+                </form>
+                <div id="formFeedback"></div>
+            </div>
+
+            <a href="#" onclick="app.switchView('login')" class="form-link">Branch/Admin Login →</a>
+        </div>
+
+        <!-- =========================== -->
+        <!-- VIEW 2: LOGIN SCREEN        -->
+        <!-- =========================== -->
+        <div id="view-login" class="login-container hidden fade-in">
+            <div class="card">
+                <h2>System Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Branch ID / Username</label>
+                        <input type="text" id="login_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="login_pass" required>
+                    </div>
+                    <button type="submit" class="submit-btn" style="background: #1f2937;">Login</button>
+                </form>
+                <a href="#" onclick="app.switchView('request')" class="form-link">← Back to Request Form</a>
+
+                <!-- Demo Credentials -->
+                <div class="demo-creds">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Admin: <span class="mono">admin / admin</span></p>
+                    <p>Branch DHA: <span class="mono">b1 / pass</span></p>
+                    <p>Branch Clifton: <span class="mono">b2 / pass</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================== -->
+        <!-- VIEW 3: DASHBOARD           -->
+        <!-- =========================== -->
+        <div id="view-dashboard" class="hidden fade-in">
+            <div class="dash-header">
+                <div>
+                    <h2 id="dash-title">Dashboard</h2>
+                    <div class="subtitle" id="dash-subtitle">Manage requests</div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card yellow">
+                    <div class="stat-label">Pending Requests</div>
+                    <div class="stat-value" id="stat-pending">0</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-label">Accepted by Me</div>
+                    <div class="stat-value" id="stat-approved-me">0</div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-label">Total Distributed</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <!-- Filter Controls -->
+                <div class="controls">
+                    <input type="text" id="searchCNIC" placeholder="Filter by CNIC..." onkeyup="filterTable()">
+                    <input type="text" id="searchMobile" placeholder="Filter by Mobile..." onkeyup="filterTable()">
+                    <select id="searchArea" onchange="filterTable()">
+                        <option value="">All Areas</option>
                         <option value="DHA">DHA</option>
                         <option value="Clifton">Clifton</option>
                         <option value="Tariq Road">Tariq Road</option>
                         <option value="Other">Other</option>
                     </select>
+                    <button class="btn-clear" onclick="clearFilters()">Reset Filters</button>
                 </div>
 
-                <div id="otherAreaGroup" class="form-group hidden">
-                    <label for="otherArea">Please specify Area</label>
-                    <input type="text" id="otherArea" name="otherArea">
+                <!-- Data Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>CNIC</th>
+                                <th>Mobile</th>
+                                <th>Area</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Assigned Branch</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
                 </div>
-
-                <div class="form-group">
-                    <label for="address">Complete Home Address</label>
-                    <textarea id="address" name="address" rows="3" required></textarea>
+                <div id="noDataMsg" class="no-data-msg hidden">
+                    No records found for this view.
                 </div>
-
-                <button type="submit" class="submit-btn">Submit Request</button>
-            </form>
-            <div id="formFeedback"></div>
+            </div>
         </div>
-
-        <a href="dashboard.html" class="nav-link">Go to Admin Dashboard →</a>
     </div>
 
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast">
+        <span id="toast-msg">Notification</span>
+    </div>
+
+    <!-- CONFIRMATION / DUPLICATE MODAL -->
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal">
+            <h3 id="modalTitle">Possible Duplicate!</h3>
+            <p id="modalBody">This CNIC or Mobile Number has already received rations.</p>
+            <div id="modalDetail" class="modal-detail hidden">
+                <p><strong>Previous Branch:</strong> <span id="dup-branch">-</span></p>
+                <p><strong>Date:</strong> <span id="dup-date">-</span></p>
+                <p><strong>Status:</strong> <span id="dup-status"
+                        style="color: var(--success); font-weight:700;">ACCEPTED</span></p>
+            </div>
+            <p id="modalQuestion" style="font-size: 0.9rem; color:#6b7280;">Are you sure you want to proceed?</p>
+            <div class="modal-btns">
+                <button class="btn-clear" onclick="closeModal()">Cancel</button>
+                <button id="modalConfirmBtn" class="action-btn btn-accept">Yes, Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= JAVASCRIPT ========= -->
     <script>
+        // ==========================================
+        // SUPABASE MIGRATION NOTES
+        // ==========================================
+        // See supabase_schema.txt for full SQL.
+        // Replace db.branches lookups with:
+        //   supabase.from('branches').select('*').eq('username', u).eq('password', p)
+        // Replace db.requests operations with:
+        //   supabase.from('requests').select('*')
+        //   supabase.from('requests').insert({...})
+        //   supabase.from('requests').update({status, accepted_by}).eq('id', id)
+
+        // --- MOCK DATABASE ---
+        const db = {
+            branches: [
+                { id: 'admin', username: 'admin', password: 'admin', name: 'Head Office', role: 'admin' },
+                { id: 'b1', username: 'b1', password: 'pass', name: 'Saylani DHA', role: 'branch' },
+                { id: 'b2', username: 'b2', password: 'pass', name: 'Saylani Clifton', role: 'branch' },
+            ],
+            requests: [
+                { id: 1, fullName: 'Asad Ali', cnic: '42101-1234567-1', mobile: '03001234567', area: 'DHA', address: 'House 5, Street 8, DHA Phase 6', status: 'Pending', branch_id: null, date: '2026-02-10' },
+                { id: 2, fullName: 'Fatima Khan', cnic: '42201-7654321-2', mobile: '03219876543', area: 'Clifton', address: 'Flat 3B, Block 9, Clifton', status: 'Assigned', branch_id: 'b1', date: '2026-02-09' },
+                { id: 3, fullName: 'Duplicate Test', cnic: '42201-7654321-2', mobile: '03009999999', area: 'Tariq Road', address: '12 Tariq Road, Karachi', status: 'Pending', branch_id: null, date: '2026-02-10' },
+            ]
+        };
+
+        // Available Branches for Assignment Dropdown
+        const availableBranches = ['Unassigned', 'Saylani DHA', 'Saylani Clifton'];
+
         // --- CNIC BOXES LOGIC ---
-        const boxes = document.querySelectorAll('.cnic-box');
-
-        boxes.forEach((box, index) => {
-            // Auto-focus next box
-            box.addEventListener('input', (e) => {
-                const val = e.target.value;
-                if (val.length === 1 && index < boxes.length - 1) boxes[index + 1].focus();
+        function initCnicBoxes() {
+            const boxes = document.querySelectorAll('.cnic-box');
+            boxes.forEach((box, index) => {
+                box.addEventListener('input', (e) => {
+                    const val = e.target.value;
+                    if (val.length === 1 && index < boxes.length - 1) boxes[index + 1].focus();
+                });
+                box.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !box.value && index > 0) boxes[index - 1].focus();
+                });
+                box.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+                    const digits = pasteData.replace(/\D/g, '').split('');
+                    digits.forEach((digit, i) => { if (boxes[i]) boxes[i].value = digit; });
+                    const nextIdx = Math.min(digits.length, boxes.length - 1);
+                    boxes[nextIdx].focus();
+                });
             });
+        }
 
-            // Focus previous box on backspace
-            box.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && !box.value && index > 0) boxes[index - 1].focus();
-            });
-
-            // Smart Paste
-            box.addEventListener('paste', (e) => {
-                e.preventDefault();
-                const pasteData = (e.clipboardData || window.clipboardData).getData('text');
-                const digits = pasteData.replace(/\D/g, '').split('');
-                digits.forEach((digit, i) => { if (boxes[i]) boxes[i].value = digit; });
-                const nextIdx = Math.min(digits.length, boxes.length - 1);
-                boxes[nextIdx].focus();
-            });
-        });
-
-        // --- FORM LOGIC ---
+        // --- AREA TOGGLE ---
         function toggleOtherArea() {
             const areaSelect = document.getElementById('area');
             const otherGroup = document.getElementById('otherAreaGroup');
@@ -331,51 +961,408 @@
             }
         }
 
-        document.getElementById('rationForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            // Assemble CNIC
-            const group1 = Array.from(document.querySelectorAll('#group1 .cnic-box')).map(b => b.value).join('');
-            const group2 = Array.from(document.querySelectorAll('#group2 .cnic-box')).map(b => b.value).join('');
-            const group3 = Array.from(document.querySelectorAll('#group3 .cnic-box')).map(b => b.value).join('');
-            const fullCnic = `${group1}-${group2}-${group3}`;
-
-            const formData = new FormData(this);
-            const fullName = formData.get('fullName').trim();
-            const mobile = formData.get('mobile').trim();
-            const area = formData.get('area') === 'Other' ? formData.get('otherArea') : formData.get('area');
-            const address = formData.get('address').trim();
-
-            // Validation
-            const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
-            if (!cnicRegex.test(fullCnic)) return showFeedback('Please fill all CNIC boxes correctly.', 'var(--danger)');
-            if (!/^[0-9]{11}$/.test(mobile)) return showFeedback('Mobile must be 11 digits.', 'var(--danger)');
-
-            // Save Data (TODO: Replace with Supabase Insert)
-            const requests = JSON.parse(localStorage.getItem('ration_requests')) || [];
-            requests.push({
-                id: Date.now(),
-                fullName,
-                cnic: fullCnic,
-                mobile,
-                area,
-                address,
-                status: 'Pending', // Initial status
-                donor: 'Unassigned' // Default donor
-            });
-            localStorage.setItem('ration_requests', JSON.stringify(requests));
-
-            showFeedback('Request submitted successfully!', 'var(--success)');
-            this.reset();
-            toggleOtherArea();
-        });
-
-        function showFeedback(msg, color) {
+        // --- FORM FEEDBACK ---
+        function showFormFeedback(msg, color) {
             const f = document.getElementById('formFeedback');
             f.textContent = msg;
             f.style.color = color;
             setTimeout(() => f.textContent = '', 3000);
         }
+
+        // --- APP STATE & LOGIC ---
+        const app = {
+            user: null,
+            currentView: 'request',
+            pendingAction: null,
+
+            init() {
+                initCnicBoxes();
+                this.renderNav();
+                this.setupListeners();
+                this.switchView('request');
+            },
+
+            // --- NAVIGATION & VIEWS ---
+            switchView(viewName) {
+                this.currentView = viewName;
+                document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+                document.getElementById(`view-${viewName}`).classList.remove('hidden');
+                if (viewName === 'dashboard') {
+                    this.renderDashboard();
+                }
+                this.renderNav();
+            },
+
+            renderNav() {
+                const nav = document.getElementById('nav-actions');
+                if (this.user) {
+                    nav.innerHTML = `
+                        <span class="nav-user-info">Logged in as: <b>${this.user.name}</b></span>
+                        <button class="nav-btn-danger" onclick="app.logout()">Logout</button>
+                    `;
+                } else {
+                    nav.innerHTML = `
+                        <button class="nav-btn-text" onclick="app.switchView('request')">Request</button>
+                        <button class="nav-btn-light" onclick="app.switchView('login')">Login</button>
+                    `;
+                }
+            },
+
+            // --- AUTHENTICATION ---
+            login(username, password) {
+                const user = db.branches.find(u => u.username === username && u.password === password);
+                if (user) {
+                    this.user = user;
+                    this.switchView('dashboard');
+                    this.showToast(`Welcome back, ${user.name}`);
+                } else {
+                    alert('Invalid credentials');
+                }
+            },
+
+            logout() {
+                this.user = null;
+                this.switchView('login');
+            },
+
+            // --- SUBMIT REQUEST ---
+            submitRequest(data) {
+                // In Supabase: await supabase.from('requests').insert(data)
+                const newId = Date.now();
+                db.requests.unshift({
+                    id: newId,
+                    ...data,
+                    status: 'Pending',
+                    branch_id: null,
+                    date: new Date().toISOString().split('T')[0]
+                });
+
+                document.getElementById('requestForm').reset();
+                // Clear CNIC boxes
+                document.querySelectorAll('.cnic-box').forEach(b => b.value = '');
+                toggleOtherArea();
+                this.showToast('Request submitted successfully!');
+                showFormFeedback('Request submitted successfully!', 'var(--success)');
+            },
+
+            // --- DUPLICATE DETECTION ---
+            getDuplicates() {
+                const cnicCounts = {};
+                const mobileCounts = {};
+                db.requests.forEach(r => {
+                    cnicCounts[r.cnic] = (cnicCounts[r.cnic] || 0) + 1;
+                    mobileCounts[r.mobile] = (mobileCounts[r.mobile] || 0) + 1;
+                });
+                return { cnicCounts, mobileCounts };
+            },
+
+            getBranchName(id) {
+                const b = db.branches.find(b => b.id === id);
+                return b ? b.name : 'Unassigned';
+            },
+
+            // --- DASHBOARD RENDER ---
+            renderDashboard() {
+                if (!this.user) return;
+                const currentRole = this.user.role;
+                const currentBranchId = this.user.id;
+
+                document.getElementById('dash-title').innerText = currentRole === 'admin' ? 'Admin Dashboard' : 'Branch Dashboard';
+                document.getElementById('dash-subtitle').innerText = this.user.name;
+
+                // Stats
+                const pendingCount = db.requests.filter(r => r.status === 'Pending').length;
+                const myCount = db.requests.filter(r => r.branch_id === currentBranchId && (r.status === 'Assigned' || r.status === 'Fulfilled')).length;
+                const totalDistributed = db.requests.filter(r => r.status === 'Assigned' || r.status === 'Fulfilled').length;
+                document.getElementById('stat-pending').innerText = pendingCount;
+                document.getElementById('stat-approved-me').innerText = myCount;
+                document.getElementById('stat-total').innerText = totalDistributed;
+
+                // Determine visible data based on role
+                let viewData = db.requests;
+                if (currentRole !== 'admin') {
+                    // Branch sees: Pending (all) + Assigned/Fulfilled by this branch
+                    viewData = db.requests.filter(r =>
+                        r.status === 'Pending' || r.branch_id === currentBranchId
+                    );
+                }
+
+                this.renderTableData(viewData);
+            },
+
+            renderTableData(data) {
+                const tbody = document.getElementById('tableBody');
+                const msg = document.getElementById('noDataMsg');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    msg.classList.remove('hidden');
+                    return;
+                }
+                msg.classList.add('hidden');
+
+                const { cnicCounts, mobileCounts } = this.getDuplicates();
+                const currentRole = this.user.role;
+                const currentBranchId = this.user.id;
+
+                data.forEach(req => {
+                    const isDuplicate = cnicCounts[req.cnic] > 1 || mobileCounts[req.mobile] > 1;
+                    const row = document.createElement('tr');
+
+                    // Branch HTML
+                    let branchHtml = '';
+                    if (currentRole === 'admin') {
+                        branchHtml = `<select class="branch-select" onchange="app.updateBranch(${req.id}, this.value)">`;
+                        availableBranches.forEach(b => {
+                            const branchName = this.getBranchName(req.branch_id);
+                            branchHtml += `<option value="${b}" ${branchName === b ? 'selected' : ''}>${b}</option>`;
+                        });
+                        branchHtml += `</select>`;
+                    } else {
+                        branchHtml = `<strong>${this.getBranchName(req.branch_id)}</strong>`;
+                    }
+
+                    // Status HTML
+                    let statusHtml = '';
+                    if (currentRole === 'admin') {
+                        statusHtml = `<select class="status-select" onchange="app.updateStatus(${req.id}, this.value)">`;
+                        ['Pending', 'Assigned', 'Fulfilled', 'Denied'].forEach(s => {
+                            statusHtml += `<option value="${s}" ${req.status === s ? 'selected' : ''}>${s}</option>`;
+                        });
+                        statusHtml += `</select>`;
+                    } else {
+                        const statusClass = 'status-' + req.status.toLowerCase();
+                        statusHtml = `<span class="badge ${statusClass}">${req.status}</span>`;
+                    }
+
+                    // Actions HTML
+                    let actionsHtml = this.generateActionButtons(req);
+
+                    row.innerHTML = `
+                        <td>
+                            <strong>${req.fullName || '-'}</strong>
+                            ${isDuplicate ? `<span class="duplicate-alert" title="Possible multiple requests found">⚠ Duplicate</span>` : ''}
+                        </td>
+                        <td style="font-family: monospace;">${req.cnic}</td>
+                        <td>${req.mobile}</td>
+                        <td>${req.area || '-'}</td>
+                        <td title="${req.address}">${(req.address || '').substring(0, 20)}${(req.address || '').length > 20 ? '...' : ''}</td>
+                        <td>${statusHtml}</td>
+                        <td>${branchHtml}</td>
+                        <td>${actionsHtml}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            },
+
+            generateActionButtons(req) {
+                const currentRole = this.user.role;
+
+                // Admin: Accept or Deny pending requests
+                if (currentRole === 'admin' && req.status === 'Pending') {
+                    return `
+                        <button class="action-btn btn-accept" onclick="app.initiateAccept(${req.id})">Accept</button>
+                        <button class="action-btn btn-deny" onclick="app.handleAction(${req.id}, 'Denied')">Deny</button>
+                    `;
+                }
+
+                // Branch: Accept pending, Mark Fulfilled if assigned to them
+                if (currentRole !== 'admin') {
+                    if (req.status === 'Pending') {
+                        return `<button class="action-btn btn-accept" onclick="app.initiateAccept(${req.id})">Accept</button>`;
+                    }
+                    if (req.status === 'Assigned' && req.branch_id === this.user.id) {
+                        return `<button class="action-btn btn-accept" onclick="app.handleAction(${req.id}, 'Fulfilled')">Mark Fulfilled</button>`;
+                    }
+                }
+
+                // Default: Reset button (admin)
+                if (currentRole === 'admin' && req.status !== 'Pending') {
+                    return `<button class="btn-clear btn-reset-small" onclick="app.updateStatus(${req.id}, 'Pending')">Reset</button>`;
+                }
+
+                return `<span style="color:#9ca3af; font-size:0.8rem;">—</span>`;
+            },
+
+            // --- APPROVAL WORKFLOW ---
+            initiateAccept(reqId) {
+                const request = db.requests.find(r => r.id === reqId);
+
+                // Check for duplicates: same CNIC or mobile, already accepted/assigned, different ID
+                const duplicate = db.requests.find(r =>
+                    (r.cnic === request.cnic || r.mobile === request.mobile) &&
+                    (r.status === 'Assigned' || r.status === 'Fulfilled') &&
+                    r.id !== reqId
+                );
+
+                if (duplicate) {
+                    // Show Duplicate Warning Modal
+                    document.getElementById('modalTitle').textContent = 'Possible Duplicate!';
+                    document.getElementById('modalBody').textContent = 'This CNIC or Mobile Number has already received rations.';
+                    document.getElementById('modalDetail').classList.remove('hidden');
+                    document.getElementById('dup-branch').innerText = this.getBranchName(duplicate.branch_id);
+                    document.getElementById('dup-date').innerText = duplicate.date;
+                    document.getElementById('dup-status').innerText = duplicate.status.toUpperCase();
+                    document.getElementById('modalQuestion').textContent = 'Are you sure you want to approve this request again?';
+                    document.getElementById('modalConfirmBtn').textContent = 'Force Approve';
+                    document.getElementById('modalConfirmBtn').className = 'action-btn btn-deny';
+                    document.getElementById('modalConfirmBtn').onclick = () => {
+                        this.executeAccept(reqId);
+                        closeModal();
+                    };
+                    openModal();
+                } else {
+                    // Simple confirmation
+                    document.getElementById('modalTitle').textContent = 'Confirm Acceptance';
+                    document.getElementById('modalBody').textContent = `Accept ration request from ${request.fullName}?`;
+                    document.getElementById('modalDetail').classList.add('hidden');
+                    document.getElementById('modalQuestion').textContent = 'This will assign the request to your branch.';
+                    document.getElementById('modalConfirmBtn').textContent = 'Yes, Accept';
+                    document.getElementById('modalConfirmBtn').className = 'action-btn btn-accept';
+                    document.getElementById('modalConfirmBtn').onclick = () => {
+                        this.executeAccept(reqId);
+                        closeModal();
+                    };
+                    openModal();
+                }
+            },
+
+            executeAccept(reqId) {
+                const reqIndex = db.requests.findIndex(r => r.id === reqId);
+                if (reqIndex > -1) {
+                    db.requests[reqIndex].status = 'Assigned';
+                    db.requests[reqIndex].branch_id = this.user.id;
+                    this.showToast('Request Accepted ✓');
+                    this.renderDashboard();
+                }
+            },
+
+            handleAction(id, newStatus) {
+                document.getElementById('modalTitle').textContent = `Confirm: ${newStatus}`;
+                document.getElementById('modalBody').textContent = `Change status to "${newStatus}"?`;
+                document.getElementById('modalDetail').classList.add('hidden');
+                document.getElementById('modalQuestion').textContent = '';
+                document.getElementById('modalConfirmBtn').textContent = 'Yes, Proceed';
+                document.getElementById('modalConfirmBtn').className = `action-btn ${newStatus === 'Denied' ? 'btn-deny' : 'btn-accept'}`;
+                document.getElementById('modalConfirmBtn').onclick = () => {
+                    this.updateStatus(id, newStatus);
+                    closeModal();
+                };
+                openModal();
+            },
+
+            updateStatus(id, newStatus) {
+                // TODO: Replace with supabase.from('requests').update({status}).eq('id', id)
+                db.requests = db.requests.map(r => r.id === id ? { ...r, status: newStatus } : r);
+                this.renderDashboard();
+            },
+
+            updateBranch(id, newBranchName) {
+                // TODO: Replace with supabase.from('requests').update({accepted_by}).eq('id', id)
+                // Map branch name back to branch_id
+                const branch = db.branches.find(b => b.name === newBranchName);
+                const branchId = branch ? branch.id : null;
+                db.requests = db.requests.map(r => r.id === id ? { ...r, branch_id: branchId } : r);
+                this.renderDashboard();
+            },
+
+            // --- UTILS ---
+            setupListeners() {
+                // Request Form
+                document.getElementById('requestForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    // Assemble CNIC from segmented boxes
+                    const group1 = Array.from(document.querySelectorAll('#group1 .cnic-box')).map(b => b.value).join('');
+                    const group2 = Array.from(document.querySelectorAll('#group2 .cnic-box')).map(b => b.value).join('');
+                    const group3 = Array.from(document.querySelectorAll('#group3 .cnic-box')).map(b => b.value).join('');
+                    const fullCnic = `${group1}-${group2}-${group3}`;
+
+                    const fullName = document.getElementById('fullName').value.trim();
+                    const mobile = document.getElementById('mobile').value.trim();
+                    const areaSelect = document.getElementById('area');
+                    const area = areaSelect.value === 'Other' ? document.getElementById('otherArea').value.trim() : areaSelect.value;
+                    const address = document.getElementById('address').value.trim();
+
+                    // Validation
+                    const cnicRegex = /^[0-9]{5}-[0-9]{7}-[0-9]{1}$/;
+                    if (!cnicRegex.test(fullCnic)) return showFormFeedback('Please fill all CNIC boxes correctly.', 'var(--danger)');
+                    if (!/^[0-9]{11}$/.test(mobile)) return showFormFeedback('Mobile must be 11 digits.', 'var(--danger)');
+
+                    this.submitRequest({ fullName, cnic: fullCnic, mobile, area, address });
+                });
+
+                // Login Form
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.login(
+                        document.getElementById('login_id').value,
+                        document.getElementById('login_pass').value
+                    );
+                });
+            },
+
+            showToast(msg) {
+                const toast = document.getElementById('toast');
+                document.getElementById('toast-msg').innerText = msg;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+        };
+
+        // --- FILTERING (Dashboard) ---
+        function filterTable() {
+            if (!app.user) return;
+            const cnicTerm = document.getElementById('searchCNIC').value.toLowerCase();
+            const mobileTerm = document.getElementById('searchMobile').value.toLowerCase();
+            const areaTerm = document.getElementById('searchArea').value;
+
+            const currentRole = app.user.role;
+            const currentBranchId = app.user.id;
+
+            // Base data respecting role
+            let baseData = db.requests;
+            if (currentRole !== 'admin') {
+                // Branch: if searching, allow finding any record by CNIC/Mobile
+                if (cnicTerm || mobileTerm) {
+                    baseData = db.requests; // Search across all
+                } else {
+                    baseData = db.requests.filter(r =>
+                        r.status === 'Pending' || r.branch_id === currentBranchId
+                    );
+                }
+            }
+
+            // Apply filters
+            const filtered = baseData.filter(r =>
+                r.cnic.toLowerCase().includes(cnicTerm) &&
+                r.mobile.includes(mobileTerm) &&
+                (areaTerm === "" || r.area === areaTerm)
+            );
+
+            app.renderTableData(filtered);
+        }
+
+        function clearFilters() {
+            document.getElementById('searchCNIC').value = '';
+            document.getElementById('searchMobile').value = '';
+            document.getElementById('searchArea').value = '';
+            app.renderDashboard();
+        }
+
+        // --- MODAL HELPERS ---
+        function openModal() {
+            document.getElementById('confirmModal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+        window.onclick = function (event) {
+            if (event.target === document.getElementById('confirmModal')) closeModal();
+        }
+
+        // --- START APP ---
+        app.init();
     </script>
 </body>
 
