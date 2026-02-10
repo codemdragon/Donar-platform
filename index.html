@@ -39,8 +39,6 @@
             animation: fadeIn 0.3s ease-in-out;
         }
 
-
-        /* Spinner animation */
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -57,13 +55,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         nav {
@@ -127,7 +120,6 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* Form Styling */
         .form-group {
             margin-bottom: 15px;
         }
@@ -187,20 +179,6 @@
             cursor: not-allowed;
         }
 
-        /* Override original definition */
-        .submit-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            width: 100%;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        /* Dashboard Styles */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -215,17 +193,9 @@
             border-left: 4px solid #ccc;
         }
 
-        .stat-card.yellow {
-            border-color: var(--warning);
-        }
-
-        .stat-card.green {
-            border-color: var(--success);
-        }
-
-        .stat-card.blue {
-            border-color: var(--primary);
-        }
+        .stat-card.yellow { border-color: var(--warning); }
+        .stat-card.green { border-color: var(--success); }
+        .stat-card.blue { border-color: var(--primary); }
 
         .stat-value {
             font-size: 1.8rem;
@@ -262,8 +232,7 @@
             min-width: 1000px;
         }
 
-        th,
-        td {
+        th, td {
             padding: 12px;
             border-bottom: 1px solid var(--border);
             text-align: left;
@@ -285,34 +254,18 @@
             font-weight: bold;
         }
 
-        .status-pending {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .status-assigned {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-fulfilled {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-denied {
-            background: #374151;
-            color: white;
-        }
+        .status-pending { background: #fee2e2; color: #991b1b; }
+        .status-assigned { background: #fef3c7; color: #92400e; }
+        .status-fulfilled { background: #d1fae5; color: #065f46; }
+        .status-denied { background: #374151; color: white; }
 
         .action-btn {
             padding: 6px 12px;
+            border-radius: 4px;
             border: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
             cursor: pointer;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-right: 4px;
             transition: opacity 0.2s;
         }
 
@@ -321,27 +274,10 @@
             cursor: not-allowed;
         }
 
-        /* Override */
-        .action-btn {
-            padding: 6px 12px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
+        .btn-accept { background: var(--success); color: white; }
+        .btn-deny { background: var(--danger); color: white; }
+        .btn-delete { background: var(--danger); color: white; }
 
-        .btn-accept {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-deny {
-            background: var(--danger);
-            color: white;
-        }
-
-        /* Bulk Toolbar */
         .bulk-toolbar {
             position: fixed;
             bottom: 20px;
@@ -367,7 +303,6 @@
             transform: translate(-50%, -10px);
         }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -411,7 +346,6 @@
             transform: translateY(0);
         }
 
-        /* Admin Styles */
         .admin-only {
             display: none !important;
         }
@@ -422,11 +356,6 @@
 
         body.is-admin td .admin-only {
             display: inline-block !important;
-        }
-
-        .btn-delete {
-            background: var(--danger);
-            color: white;
         }
 
         .branch-item {
@@ -443,11 +372,9 @@
             font-size: 0.9rem;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
-
     <nav>
         <div class="nav-inner">
             <div class="nav-brand">🤲 RationConnect</div>
@@ -469,21 +396,27 @@
                         <div class="form-group">
                             <label>CNIC Number</label>
                             <div class="cnic-container">
-                                <div class="cnic-group" id="g1"><input type="text" class="cnic-box" maxlength="1"
-                                        required><input type="text" class="cnic-box" maxlength="1" required><input
-                                        type="text" class="cnic-box" maxlength="1" required><input type="text"
-                                        class="cnic-box" maxlength="1" required><input type="text" class="cnic-box"
-                                        maxlength="1" required></div>
+                                <div class="cnic-group" id="g1">
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                </div>
                                 <span>-</span>
-                                <div class="cnic-group" id="g2"><input type="text" class="cnic-box" maxlength="1"
-                                        required><input type="text" class="cnic-box" maxlength="1" required><input
-                                        type="text" class="cnic-box" maxlength="1" required><input type="text"
-                                        class="cnic-box" maxlength="1" required><input type="text" class="cnic-box"
-                                        maxlength="1" required><input type="text" class="cnic-box" maxlength="1"
-                                        required><input type="text" class="cnic-box" maxlength="1" required></div>
+                                <div class="cnic-group" id="g2">
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                </div>
                                 <span>-</span>
-                                <div class="cnic-group" id="g3"><input type="text" class="cnic-box" maxlength="1"
-                                        required></div>
+                                <div class="cnic-group" id="g3">
+                                    <input type="text" class="cnic-box" maxlength="1" required>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -506,8 +439,9 @@
                         <button type="submit" class="submit-btn" id="requestSubmitBtn">Submit Request</button>
                     </form>
                 </div>
-                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('login'); return false;"
-                        style="color:var(--primary);">Branch Login →</a></p>
+                <p style="text-align:center; margin-top:20px;">
+                    <a href="#" onclick="window.app.switchView('login'); return false;" style="color:var(--primary);">Branch Login →</a>
+                </p>
             </div>
         </div>
 
@@ -516,13 +450,19 @@
             <div style="max-width: 380px; margin: 0 auto;" class="card">
                 <h2 style="text-align: center; margin-bottom: 20px;">Staff Login</h2>
                 <form id="loginForm">
-                    <div class="form-group"><label>Email</label><input type="email" id="user"
-                            placeholder="admin@local.test" required></div>
-                    <div class="form-group"><label>Password</label><input type="password" id="pass" required></div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="user" placeholder="admin@local.test" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="pass" required>
+                    </div>
                     <button type="submit" class="submit-btn" id="loginBtn" style="background:#1f2937;">Login</button>
                 </form>
-                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('request'); return false;">←
-                        Back</a></p>
+                <p style="text-align:center; margin-top:20px;">
+                    <a href="#" onclick="window.app.switchView('request'); return false;">← Back</a>
+                </p>
             </div>
         </div>
 
@@ -545,28 +485,23 @@
 
             <div class="card">
                 <div class="controls">
-                    <input type="text" id="f-cnic" placeholder="Filter CNIC..." onkeyup="app.filter()">
-                    <input type="text" id="f-mobile" placeholder="Filter Mobile..." onkeyup="app.filter()">
-                    <select id="f-area" onchange="app.filter()">
+                    <input type="text" id="f-cnic" placeholder="Filter CNIC..." onkeyup="window.app.filter()">
+                    <input type="text" id="f-mobile" placeholder="Filter Mobile..." onkeyup="window.app.filter()">
+                    <select id="f-area" onchange="window.app.filter()">
                         <option value="">All Areas</option>
                         <option value="DHA">DHA</option>
                         <option value="Clifton">Clifton</option>
                         <option value="Tariq Road">Tariq Road</option>
                         <option value="Others">Others</option>
                     </select>
-                    <button class="action-btn" onclick="app.resetFilters()"
-                        style="background:#6b7280; color:white; padding:10px 20px;">Reset Filters</button>
-                    <button class="action-btn btn-delete admin-only" onclick="app.clearAll()">⚠ Clear All
-                        Requests</button>
-                    <button class="action-btn admin-only" style="background:#4b5563; color:white;"
-                        onclick="app.showBranchManager()">⚙ Manage Branches</button>
+                    <button class="action-btn" onclick="window.app.resetFilters()" style="background:#6b7280; color:white; padding:10px 20px;">Reset Filters</button>
+                    <button class="action-btn btn-delete admin-only" onclick="window.app.clearAll()">⚠ Clear All Requests</button>
+                    <button class="action-btn admin-only" style="background:#4b5563; color:white;" onclick="window.app.showBranchManager()">⚙ Manage Branches</button>
                 </div>
 
                 <div class="table-container">
                     <table id="dashTable">
-                        <thead id="tableHead">
-                            <!-- Dynamic Headings Based on Role -->
-                        </thead>
+                        <thead id="tableHead"></thead>
                         <tbody id="tableBody"></tbody>
                     </table>
                 </div>
@@ -577,22 +512,19 @@
     <!-- BULK ACTIONS -->
     <div id="bulkToolbar" class="bulk-toolbar">
         <span id="bulkCount">0 selected</span>
-        <button class="action-btn btn-accept" onclick="app.bulkAccept()">✓ Group Accept</button>
-        <button class="action-btn btn-delete admin-only" onclick="app.bulkDelete()">🗑 Delete Selected</button>
-        <button class="action-btn" onclick="app.clearSelection()"
-            style="background:transparent; color:white; border:1px solid white;">Cancel</button>
+        <button class="action-btn btn-accept" onclick="window.app.bulkAccept()">✓ Group Accept</button>
+        <button class="action-btn btn-delete admin-only" onclick="window.app.bulkDelete()">🗑 Delete Selected</button>
+        <button class="action-btn" onclick="window.app.clearSelection()" style="background:transparent; color:white; border:1px solid white;">Cancel</button>
     </div>
 
     <!-- MODAL -->
     <div id="confirmModal" class="modal-overlay">
         <div class="modal">
             <h3 id="modalTitle" style="color:var(--danger);">First Duplicate Found!</h3>
-            <p id="modalMsg" style="margin:15px 0; color:#4b5563;">This person already has an entry. Do you want to
-                allow this one? (Any further ones will be auto-rejected)</p>
+            <p id="modalMsg" style="margin:15px 0; color:#4b5563;">This person already has an entry. Do you want to allow this one? (Any further ones will be auto-rejected)</p>
             <div id="modalBtns" style="display:flex; justify-content:center; gap:10px;">
-                <button class="action-btn" onclick="app.modalResolve(false)"
-                    style="background:#6b7280; color:white;">Deny</button>
-                <button class="action-btn btn-accept" onclick="app.modalResolve(true)">Allow This One</button>
+                <button class="action-btn" onclick="window.app.modalResolve(false)" style="background:#6b7280; color:white;">Deny</button>
+                <button class="action-btn btn-accept" onclick="window.app.modalResolve(true)">Allow This One</button>
             </div>
         </div>
     </div>
@@ -601,560 +533,538 @@
     <div id="branchModal" class="modal-overlay">
         <div class="modal" style="max-width: 500px;">
             <h3>Branch Management</h3>
-
-            <div
-                style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; border: 1px solid var(--border);">
+            <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; border: 1px solid var(--border);">
                 <h4 style="margin-bottom:10px;">Add New Branch</h4>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-                    <input type="text" id="nb-name" placeholder="Branch Name (e.g. Edhi)"
-                        style="grid-column: span 2; padding:8px;">
+                    <input type="text" id="nb-name" placeholder="Branch Name (e.g. Edhi)" style="grid-column: span 2; padding:8px;">
                     <input type="text" id="nb-user" placeholder="Username" style="padding:8px;">
                     <input type="text" id="nb-pass" placeholder="Password" style="padding:8px;">
                 </div>
-                <button class="action-btn btn-accept" style="width:100%; margin-top:10px;" onclick="app.addBranch()">+
-                    Add Branch Account</button>
+                <button class="action-btn btn-accept" style="width:100%; margin-top:10px;" onclick="window.app.addBranch()">+ Add Branch Account</button>
             </div>
-
             <div id="branchList" style="margin: 20px 0; max-height: 250px; overflow-y: auto; text-align: left;"></div>
             <div style="display:flex; justify-content:center; gap:10px;">
-                <button class="action-btn" onclick="document.getElementById('branchModal').classList.remove('active')"
-                    style="background:#6b7280; color:white;">Close</button>
+                <button class="action-btn" onclick="document.getElementById('branchModal').classList.remove('active')" style="background:#6b7280; color:white;">Close</button>
             </div>
         </div>
     </div>
 
     <div id="toast" class="toast"><span id="toastMsg"></span></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // --- SUPABASE CONFIG ---
-        const SUPABASE_URL = "https://jallpzdxdzgjkgjwcggt.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbGxwemR4ZHpnamtnandjZ2d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDg4MzMsImV4cCI6MjA4NjI4NDgzM30.9Kras0mPHTfMQUnVibuXv3YuGw_tXXwK896nw4Au7P0";
+        (function() {
+            'use strict';
 
-        // Initialize Supabase
-        let supabase;
-        try {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log("✅ Supabase initialized");
-        } catch (err) {
-            console.error("❌ Supabase initialization failed:", err);
-            alert("Failed to initialize Supabase. Please refresh the page.");
-        }
+            const SUPABASE_URL = "https://jallpzdxdzgjkgjwcggt.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbGxwemR4ZHpnamtnandjZ2d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDg4MzMsImV4cCI6MjA4NjI4NDgzM30.9Kras0mPHTfMQUnVibuXv3YuGw_tXXwK896nw4Au7P0";
 
-        const app = {
-            user: null, // This will store { id, n, r, b_id }
-            session: null,
-            selected: new Set(),
-            modalPromise: null,
+            let supabaseClient;
+            try {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log("✅ Supabase initialized");
+            } catch (err) {
+                console.error("❌ Supabase initialization failed:", err);
+                alert("Failed to initialize Supabase. Please refresh the page.");
+            }
 
-            async init() {
-                this.setupCnicAutoTab();
-                this.setupListeners();
+            const app = {
+                user: null,
+                session: null,
+                selected: new Set(),
+                modalPromise: null,
+                supabase: supabaseClient,
 
-                // Auth State Listener
-                supabase.auth.onAuthStateChange(async (event, session) => {
-                    this.session = session;
+                async init() {
+                    this.setupCnicAutoTab();
+                    this.setupListeners();
+
+                    this.supabase.auth.onAuthStateChange(async (event, session) => {
+                        this.session = session;
+                        if (session) {
+                            await this.loadUserProfile();
+                            this.switchView('dashboard');
+                        } else {
+                            this.user = null;
+                            this.switchView('request');
+                        }
+                    });
+
+                    const { data: { session } } = await this.supabase.auth.getSession();
                     if (session) {
+                        this.session = session;
                         await this.loadUserProfile();
                         this.switchView('dashboard');
                     } else {
-                        this.user = null;
                         this.switchView('request');
                     }
-                });
+                },
 
-                // Check initial session
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session) {
-                    this.session = session;
-                    await this.loadUserProfile();
-                    this.switchView('dashboard');
-                } else {
-                    this.switchView('request');
-                }
-            },
+                async loadUserProfile() {
+                    if (!this.session) return;
+                    const { data: profile, error } = await this.supabase
+                        .from('branch_profiles')
+                        .select('branch_id, branches(branch_name, is_admin)')
+                        .eq('user_id', this.session.user.id)
+                        .maybeSingle();
 
-            async loadUserProfile() {
-                if (!this.session) return;
-                const { data: profile, error } = await supabase
-                    .from('branch_profiles')
-                    .select('branch_id, branches(branch_name, is_admin)')
-                    .eq('user_id', this.session.user.id)
-                    .maybeSingle();
+                    if (error) {
+                        console.error('Profile load error:', error);
+                        return;
+                    }
 
-                if (error) {
-                    console.error('Profile load error:', error);
-                    return;
-                }
+                    if (profile) {
+                        this.user = {
+                            id: profile.branch_id,
+                            n: profile.branches?.branch_name ?? 'Branch',
+                            r: profile.branches?.is_admin ? 'admin' : 'branch',
+                            b_id: profile.branch_id
+                        };
+                    }
+                },
 
-                if (profile) {
-                    this.user = {
-                        id: profile.branch_id,
-                        n: profile.branches?.branch_name ?? 'Branch',
-                        r: profile.branches?.is_admin ? 'admin' : 'branch',
-                        b_id: profile.branch_id
+                setupCnicAutoTab() {
+                    document.querySelectorAll('.cnic-box').forEach((box, i, all) => {
+                        box.oninput = () => { if (box.value && all[i + 1]) all[i + 1].focus(); };
+                        box.onkeydown = (e) => { if (e.key === 'Backspace' && !box.value && all[i - 1]) all[i - 1].focus(); };
+                    });
+                },
+
+                setupListeners() {
+                    document.getElementById('requestForm').onsubmit = async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('requestSubmitBtn');
+                        btn.disabled = true;
+                        const originalText = btn.textContent;
+                        btn.innerHTML = '<span class="spinner"></span>Submitting...';
+
+                        try {
+                            const mobile = document.getElementById('mobile').value.trim();
+                            if (!/^\d{11}$/.test(mobile)) {
+                                this.showToast("Invalid Mobile: Must be 11 digits");
+                                return;
+                            }
+
+                            const cnicArr = [...document.querySelectorAll('.cnic-box')].map(b => b.value);
+                            const formattedCnic = `${cnicArr.slice(0, 5).join('')}-${cnicArr.slice(5, 12).join('')}-${cnicArr.slice(12).join('')}`;
+                            if (!/^\d{5}-\d{7}-\d{1}$/.test(formattedCnic)) {
+                                this.showToast("Invalid CNIC Format");
+                                return;
+                            }
+
+                            const { error } = await this.supabase.from('requests').insert({
+                                full_name: document.getElementById('fullName').value,
+                                cnic: formattedCnic,
+                                mobile: mobile,
+                                area: document.getElementById('area').value,
+                                address: document.getElementById('address').value
+                            });
+
+                            if (error) {
+                                this.showToast("Submission Failed: " + error.message);
+                            } else {
+                                e.target.reset();
+                                this.showToast("Request Submitted!");
+                            }
+                        } finally {
+                            btn.disabled = false;
+                            btn.textContent = originalText;
+                        }
                     };
-                }
-            },
 
-            setupCnicAutoTab() {
-                document.querySelectorAll('.cnic-box').forEach((box, i, all) => {
-                    box.oninput = () => { if (box.value && all[i + 1]) all[i + 1].focus(); };
-                    box.onkeydown = (e) => { if (e.key === 'Backspace' && !box.value && all[i - 1]) all[i - 1].focus(); };
-                });
-            },
+                    document.getElementById('loginForm').onsubmit = async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('loginBtn');
+                        btn.disabled = true;
+                        const originalText = btn.textContent;
+                        btn.innerHTML = '<span class="spinner"></span>Logging in...';
 
-            setupListeners() {
-                document.getElementById('requestForm').onsubmit = async (e) => {
-                    e.preventDefault();
-                    const btn = document.getElementById('requestSubmitBtn');
-                    
-                    // Disable button and show loading
-                    btn.disabled = true;
-                    const originalText = btn.textContent;
-                    btn.innerHTML = '<span class="spinner"></span>Submitting...';
+                        try {
+                            const email = document.getElementById('user').value;
+                            const pass = document.getElementById('pass').value;
 
-                    try {
-                        const mobile = document.getElementById('mobile').value.trim();
-                        if (!/^\d{11}$/.test(mobile)) {
-                            this.showToast("Invalid Mobile: Must be 11 digits");
-                            return;
+                            const { data, error } = await this.supabase.auth.signInWithPassword({ 
+                                email, 
+                                password: pass 
+                            });
+
+                            if (error) {
+                                this.showToast("Login Failed: " + error.message);
+                            } else {
+                                this.session = data.session;
+                                await this.loadUserProfile();
+                                this.switchView('dashboard');
+                            }
+                        } finally {
+                            btn.disabled = false;
+                            btn.textContent = originalText;
                         }
+                    };
+                },
 
-                        const cnicArr = [...document.querySelectorAll('.cnic-box')].map(b => b.value);
-                        const formattedCnic = `${cnicArr.slice(0, 5).join('')}-${cnicArr.slice(5, 12).join('')}-${cnicArr.slice(12).join('')}`;
-                        if (!/^\d{5}-\d{7}-\d{1}$/.test(formattedCnic)) {
-                            this.showToast("Invalid CNIC Format");
-                            return;
-                        }
+                switchView(v) {
+                    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+                    document.getElementById('view-' + v).classList.remove('hidden');
 
-                        const { error } = await supabase.from('requests').insert({
-                            full_name: document.getElementById('fullName').value,
-                            cnic: formattedCnic,
-                            mobile: mobile,
-                            area: document.getElementById('area').value,
-                            address: document.getElementById('address').value
-                        });
-
-                        if (error) {
-                            this.showToast("Submission Failed: " + error.message);
-                        } else {
-                            e.target.reset();
-                            this.showToast("Request Submitted!");
-                        }
-                    } finally {
-                        // Re-enable button
-                        btn.disabled = false;
-                        btn.textContent = originalText;
+                    if (v === 'dashboard') {
+                        const role = this.user?.r || 'branch';
+                        document.body.className = role === 'admin' ? 'is-admin' : '';
+                        this.renderTableHead();
+                        this.renderDash();
+                    } else {
+                        document.body.className = '';
                     }
-                };
+                    this.renderNav();
+                },
 
-                document.getElementById('loginForm').onsubmit = async (e) => {
-                    e.preventDefault();
-                    const btn = document.getElementById('loginBtn');
-                    
-                    // Disable button and show loading
-                    btn.disabled = true;
-                    const originalText = btn.textContent;
-                    btn.innerHTML = '<span class="spinner"></span>Logging in...';
+                renderNav() {
+                    const nav = document.getElementById('nav-actions');
+                    nav.innerHTML = this.user ?
+                        `<span>${this.user.n}</span><button class="nav-btn-danger" onclick="window.app.logout()">Logout</button>` :
+                        `<button class="nav-btn-light" onclick="window.app.switchView('login'); return false;">Staff Login</button>`;
+                },
 
-                    try {
-                        const email = document.getElementById('user').value;
-                        const pass = document.getElementById('pass').value;
+                logout() {
+                    this.supabase.auth.signOut();
+                    this.user = null;
+                    this.session = null;
+                    this.switchView('login');
+                },
 
-                        console.log("Attempting login for:", email);
-                        const { data, error } = await supabase.auth.signInWithPassword({ 
-                            email, 
-                            password: pass 
-                        });
+                async getFilteredData() {
+                    const cTerm = document.getElementById('f-cnic').value.trim();
+                    const mTerm = document.getElementById('f-mobile').value.trim();
+                    const aTerm = document.getElementById('f-area').value;
 
-                        if (error) {
-                            console.error("Login error:", error);
-                            this.showToast("Login Failed: " + error.message);
-                        } else {
-                            console.log("Login successful");
-                            this.session = data.session;
-                            await this.loadUserProfile();
-                            this.switchView('dashboard');
-                        }
-                    } catch (err) {
-                        console.error("Login exception:", err);
-                        this.showToast("Login error: " + err.message);
-                    } finally {
-                        // Re-enable button
-                        btn.disabled = false;
-                        btn.textContent = originalText;
+                    let query = this.supabase.from('requests').select('*');
+
+                    if (cTerm) query = query.ilike('cnic', `%${cTerm}%`);
+                    if (mTerm) query = query.ilike('mobile', `%${mTerm}%`);
+                    if (aTerm) query = query.eq('area', aTerm);
+
+                    const { data, error } = await query.order('created_at', { ascending: false, nullsFirst: false });
+                    if (error) {
+                        console.error("Filter error:", error);
+                        return [];
                     }
-                };
-            },
+                    return data || [];
+                },
 
-            switchView(v) {
-                document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-                document.getElementById('view-' + v).classList.remove('hidden');
+                renderTableHead() {
+                    const head = document.getElementById('tableHead');
+                    const isAdmin = this.user?.r === 'admin';
 
-                if (v === 'dashboard') {
-                    const role = this.user?.r || 'branch';
-                    document.body.className = role === 'admin' ? 'is-admin' : '';
-                    this.renderTableHead();
-                    this.renderDash();
-                } else {
-                    document.body.className = '';
-                }
-                this.renderNav();
-            },
-
-            renderNav() {
-                const nav = document.getElementById('nav-actions');
-                nav.innerHTML = this.user ?
-                    `<span>${this.user.n}</span><button class="nav-btn-danger" onclick="app.logout()">Logout</button>` :
-                    `<button class="nav-btn-light" onclick="app.switchView('login'); return false;">Staff Login</button>`;
-            },
-
-            logout() {
-                supabase.auth.signOut();
-                this.user = null;
-                this.session = null;
-                this.switchView('login');
-            },
-
-            async getFilteredData() {
-                const cTerm = document.getElementById('f-cnic').value.trim();
-                const mTerm = document.getElementById('f-mobile').value.trim();
-                const aTerm = document.getElementById('f-area').value;
-
-                let query = supabase.from('requests').select('*');
-
-                if (cTerm) query = query.ilike('cnic', `%${cTerm}%`);
-                if (mTerm) query = query.ilike('mobile', `%${mTerm}%`);
-                if (aTerm) query = query.eq('area', aTerm);
-
-                const { data, error } = await query.order('created_at', { ascending: false, nullsFirst: false });
-                if (error) {
-                    console.error("Filter error:", error);
-                    return [];
-                }
-                return data || [];
-            },
-
-            renderTableHead() {
-                const head = document.getElementById('tableHead');
-                const isAdmin = this.user?.r === 'admin';
-
-                head.innerHTML = `
-                    <tr>
-                        <th style="width:40px;"><input type="checkbox" id="selectAll" onchange="app.toggleFiltered(this)"></th>
-                        <th>Name</th>
-                        <th>CNIC</th>
-                        <th>Mobile</th>
-                        <th>Area</th>
-                        <th style="width: 150px;">Address</th>
-                        <th>Status</th>
-                        ${isAdmin ? '<th>Assigned Branch</th>' : ''}
-                        <th>Actions</th>
-                        <th>Timestamp</th>
-                    </tr>
-                `;
-            },
-
-            async renderDash() {
-                const body = document.getElementById('tableBody');
-                body.innerHTML = '<tr><td colspan="10" style="text-align:center;">Loading...</td></tr>';
-
-                const filtered = await this.getFilteredData();
-                const isAdmin = this.user?.r === 'admin';
-
-                // Fetch branch names for display (Admins might need this)
-                const { data: branches } = await supabase.from('branches').select('id, branch_name');
-                const branchMap = Object.fromEntries(branches?.map(b => [b.id, b.branch_name]) || []);
-
-                body.innerHTML = '';
-                filtered.forEach(r => {
-                    const branchName = r.accepted_by ? (branchMap[r.accepted_by] || 'Unknown') : '—';
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${r.status === 'Pending' ? `<input type="checkbox" data-id="${r.id}" ${this.selected.has(r.id) ? 'checked' : ''} onchange="app.toggle('${r.id}')">` : ''}</td>
-                        <td style="font-weight:bold;">${r.full_name}</td>
-                        <td style="font-family:monospace; font-size:0.8rem;">${r.cnic}</td>
-                        <td style="font-family:monospace; font-size:0.8rem;">${r.mobile}</td>
-                        <td>${r.area}</td>
-                        <td style="font-size:0.75rem; color:#666;" title="${r.address}">${r.address?.substring(0, 20)}${r.address?.length > 20 ? '...' : ''}</td>
-                        <td><span class="badge status-${r.status.toLowerCase()}">${r.status}</span></td>
-                        ${isAdmin ? `<td><small>${branchName}</small></td>` : ''}
-                        <td>
-                            ${r.status === 'Pending' ? `<button class="action-btn btn-accept" onclick="app.singleAccept('${r.id}')">Accept</button>` : '—'}
-                            <button class="action-btn btn-delete admin-only" style="padding: 4px 8px; margin-left:5px;" onclick="app.deleteReq('${r.id}')">Delete</button>
-                        </td>
-                        <td style="font-size:0.7rem; color:#6b7280; white-space:nowrap;">${new Date(r.created_at).toLocaleString()}</td>
+                    head.innerHTML = `
+                        <tr>
+                            <th style="width:40px;"><input type="checkbox" id="selectAll" onchange="window.app.toggleFiltered(this)"></th>
+                            <th>Name</th>
+                            <th>CNIC</th>
+                            <th>Mobile</th>
+                            <th>Area</th>
+                            <th style="width: 150px;">Address</th>
+                            <th>Status</th>
+                            ${isAdmin ? '<th>Assigned Branch</th>' : ''}
+                            <th>Actions</th>
+                            <th>Timestamp</th>
+                        </tr>
                     `;
-                    body.appendChild(tr);
-                });
+                },
 
-                // Update Stats (Robust fallback using head counts)
-                try {
-                    const myId = this.user?.id || '00000000-0000-0000-0000-000000000000';
-                    const [pRes, mRes, tRes] = await Promise.all([
-                        supabase.from('requests').select('id', { count: 'exact', head: true }).eq('status', 'Pending'),
-                        supabase.from('requests').select('id', { count: 'exact', head: true }).eq('accepted_by', myId),
-                        supabase.from('requests').select('id', { count: 'exact', head: true }).in('status', ['Assigned', 'Fulfilled'])
-                    ]);
+                async renderDash() {
+                    const body = document.getElementById('tableBody');
+                    body.innerHTML = '<tr><td colspan="10" style="text-align:center;">Loading...</td></tr>';
 
-                    document.getElementById('s-pending').innerText = pRes.count || 0;
-                    document.getElementById('s-mine').innerText = mRes.count || 0;
-                    document.getElementById('s-total').innerText = tRes.count || 0;
-                } catch (err) {
-                    console.error("Stats fetch error:", err);
-                }
+                    const filtered = await this.getFilteredData();
+                    const isAdmin = this.user?.r === 'admin';
 
-                this.updateToolbar();
-            },
+                    const { data: branches } = await this.supabase.from('branches').select('id, branch_name');
+                    const branchMap = Object.fromEntries(branches?.map(b => [b.id, b.branch_name]) || []);
 
-            // --- SELECTION LOGIC ---
-            toggle(id) {
-                if (this.selected.has(id)) this.selected.delete(id);
-                else this.selected.add(id);
-                this.updateToolbar();
-            },
+                    body.innerHTML = '';
+                    filtered.forEach(r => {
+                        const branchName = r.accepted_by ? (branchMap[r.accepted_by] || 'Unknown') : '—';
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${r.status === 'Pending' ? `<input type="checkbox" data-id="${r.id}" ${this.selected.has(r.id) ? 'checked' : ''} onchange="window.app.toggle('${r.id}')">` : ''}</td>
+                            <td style="font-weight:bold;">${r.full_name}</td>
+                            <td style="font-family:monospace; font-size:0.8rem;">${r.cnic}</td>
+                            <td style="font-family:monospace; font-size:0.8rem;">${r.mobile}</td>
+                            <td>${r.area}</td>
+                            <td style="font-size:0.75rem; color:#666;" title="${r.address}">${r.address?.substring(0, 20)}${r.address?.length > 20 ? '...' : ''}</td>
+                            <td><span class="badge status-${r.status.toLowerCase()}">${r.status}</span></td>
+                            ${isAdmin ? `<td><small>${branchName}</small></td>` : ''}
+                            <td>
+                                ${r.status === 'Pending' ? `<button class="action-btn btn-accept" onclick="window.app.singleAccept('${r.id}')">Accept</button>` : '—'}
+                                <button class="action-btn btn-delete admin-only" style="padding: 4px 8px; margin-left:5px;" onclick="window.app.deleteReq('${r.id}')">Delete</button>
+                            </td>
+                            <td style="font-size:0.7rem; color:#6b7280; white-space:nowrap;">${new Date(r.created_at).toLocaleString()}</td>
+                        `;
+                        body.appendChild(tr);
+                    });
 
-            async toggleFiltered(src) {
-                const filtered = await this.getFilteredData();
-                const pendingFiltered = filtered.filter(r => r.status === 'Pending');
+                    try {
+                        const myId = this.user?.id || '00000000-0000-0000-0000-000000000000';
+                        const [pRes, mRes, tRes] = await Promise.all([
+                            this.supabase.from('requests').select('id', { count: 'exact', head: true }).eq('status', 'Pending'),
+                            this.supabase.from('requests').select('id', { count: 'exact', head: true }).eq('accepted_by', myId),
+                            this.supabase.from('requests').select('id', { count: 'exact', head: true }).in('status', ['Assigned', 'Fulfilled'])
+                        ]);
 
-                pendingFiltered.forEach(r => {
-                    if (src.checked) this.selected.add(r.id);
-                    else this.selected.delete(r.id);
-                });
-
-                await this.renderDash();
-            },
-
-            clearSelection() {
-                this.selected.clear();
-                const sa = document.getElementById('selectAll');
-                if (sa) sa.checked = false;
-                this.renderDash();
-            },
-
-            updateToolbar() {
-                const bar = document.getElementById('bulkToolbar');
-                document.getElementById('bulkCount').innerText = `${this.selected.size} selected`;
-                if (this.selected.size > 0) bar.classList.add('visible');
-                else bar.classList.remove('visible');
-            },
-
-            // --- ACTIONS ---
-            filter() {
-                const sa = document.getElementById('selectAll');
-                if (sa) sa.checked = false;
-                this.renderDash();
-            },
-
-            resetFilters() {
-                document.getElementById('f-cnic').value = '';
-                document.getElementById('f-mobile').value = '';
-                document.getElementById('f-area').value = '';
-                const sa = document.getElementById('selectAll');
-                if (sa) sa.checked = false;
-                this.renderDash();
-            },
-
-            async bulkAccept() {
-                const ids = Array.from(this.selected);
-                if (ids.length === 0) return;
-
-                const { data: items, error } = await supabase
-                    .from('requests')
-                    .select('*')
-                    .in('id', ids)
-                    .eq('status', 'Pending');
-
-                if (error) return this.showToast('Failed to fetch items: ' + error.message);
-
-                await this.processBatch(items || []);
-                this.clearSelection();
-                await this.renderDash();
-            },
-
-            async singleAccept(id) {
-                const { data: item, error } = await supabase
-                    .from('requests')
-                    .select('*')
-                    .eq('id', id)
-                    .single();
-
-                if (error) return this.showToast('Failed to fetch request: ' + error.message);
-
-                await this.processBatch([item]);
-                await this.renderDash();
-            },
-
-            async processBatch(items) {
-                const sessionAccepted = new Set();
-                const sessionWarned = new Set();
-
-                for (const item of items) {
-                    const key = item.cnic;
-
-                    // Duplicate check (Real-time)
-                    const { data: dups } = await supabase
-                        .from('requests')
-                        .select('id')
-                        .or(`cnic.eq.${key},mobile.eq.${item.mobile}`)
-                        .in('status', ['Assigned', 'Fulfilled'])
-                        .neq('id', item.id);
-
-                    const hasExistingAssignment = dups && dups.length > 0;
-
-                    if (!hasExistingAssignment && !sessionAccepted.has(key)) {
-                        await this.commitAccept(item.id);
-                        sessionAccepted.add(key);
+                        document.getElementById('s-pending').innerText = pRes.count || 0;
+                        document.getElementById('s-mine').innerText = mRes.count || 0;
+                        document.getElementById('s-total').innerText = tRes.count || 0;
+                    } catch (err) {
+                        console.error("Stats fetch error:", err);
                     }
-                    else if (!sessionWarned.has(key)) {
-                        document.getElementById('modalMsg').innerText = `Request for ${item.full_name} (${item.cnic}) is a duplicate. Allow this one? Others will be auto-rejected.`;
-                        const choice = await this.askUser();
-                        sessionWarned.add(key);
 
-                        if (choice) {
+                    this.updateToolbar();
+                },
+
+                toggle(id) {
+                    if (this.selected.has(id)) this.selected.delete(id);
+                    else this.selected.add(id);
+                    this.updateToolbar();
+                },
+
+                async toggleFiltered(src) {
+                    const filtered = await this.getFilteredData();
+                    const pendingFiltered = filtered.filter(r => r.status === 'Pending');
+
+                    pendingFiltered.forEach(r => {
+                        if (src.checked) this.selected.add(r.id);
+                        else this.selected.delete(r.id);
+                    });
+
+                    await this.renderDash();
+                },
+
+                clearSelection() {
+                    this.selected.clear();
+                    const sa = document.getElementById('selectAll');
+                    if (sa) sa.checked = false;
+                    this.renderDash();
+                },
+
+                updateToolbar() {
+                    const bar = document.getElementById('bulkToolbar');
+                    document.getElementById('bulkCount').innerText = `${this.selected.size} selected`;
+                    if (this.selected.size > 0) bar.classList.add('visible');
+                    else bar.classList.remove('visible');
+                },
+
+                filter() {
+                    const sa = document.getElementById('selectAll');
+                    if (sa) sa.checked = false;
+                    this.renderDash();
+                },
+
+                resetFilters() {
+                    document.getElementById('f-cnic').value = '';
+                    document.getElementById('f-mobile').value = '';
+                    document.getElementById('f-area').value = '';
+                    const sa = document.getElementById('selectAll');
+                    if (sa) sa.checked = false;
+                    this.renderDash();
+                },
+
+                async bulkAccept() {
+                    const ids = Array.from(this.selected);
+                    if (ids.length === 0) return;
+
+                    const { data: items, error } = await this.supabase
+                        .from('requests')
+                        .select('*')
+                        .in('id', ids)
+                        .eq('status', 'Pending');
+
+                    if (error) return this.showToast('Failed to fetch items: ' + error.message);
+
+                    await this.processBatch(items || []);
+                    this.clearSelection();
+                    await this.renderDash();
+                },
+
+                async singleAccept(id) {
+                    const { data: item, error } = await this.supabase
+                        .from('requests')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
+
+                    if (error) return this.showToast('Failed to fetch request: ' + error.message);
+
+                    await this.processBatch([item]);
+                    await this.renderDash();
+                },
+
+                async processBatch(items) {
+                    const sessionAccepted = new Set();
+                    const sessionWarned = new Set();
+
+                    for (const item of items) {
+                        const key = item.cnic;
+
+                        const { data: dups } = await this.supabase
+                            .from('requests')
+                            .select('id')
+                            .or(`cnic.eq.${key},mobile.eq.${item.mobile}`)
+                            .in('status', ['Assigned', 'Fulfilled'])
+                            .neq('id', item.id);
+
+                        const hasExistingAssignment = dups && dups.length > 0;
+
+                        if (!hasExistingAssignment && !sessionAccepted.has(key)) {
                             await this.commitAccept(item.id);
                             sessionAccepted.add(key);
-                        } else {
+                        }
+                        else if (!sessionWarned.has(key)) {
+                            document.getElementById('modalMsg').innerText = `Request for ${item.full_name} (${item.cnic}) is a duplicate. Allow this one? Others will be auto-rejected.`;
+                            const choice = await this.askUser();
+                            sessionWarned.add(key);
+
+                            if (choice) {
+                                await this.commitAccept(item.id);
+                                sessionAccepted.add(key);
+                            } else {
+                                await this.commitDeny(item.id);
+                            }
+                        }
+                        else {
                             await this.commitDeny(item.id);
                         }
                     }
+                    this.showToast("Batch processed");
+                },
+
+                async commitAccept(id) {
+                    const { error } = await this.supabase.from('requests').update({
+                        status: 'Assigned',
+                        accepted_by: this.user?.id
+                    }).eq('id', id);
+                    if (error) console.error("commitAccept error:", error);
+                },
+
+                async commitDeny(id) {
+                    const { error } = await this.supabase.from('requests').update({
+                        status: 'Denied',
+                        accepted_by: this.user?.id
+                    }).eq('id', id);
+                    if (error) console.error("commitDeny error:", error);
+                },
+
+                async deleteReq(id) {
+                    if (!confirm("Are you sure you want to delete this permanently?")) return;
+                    const { error } = await this.supabase.from('requests').delete().eq('id', id);
+                    if (error) this.showToast("Delete failed: " + error.message);
                     else {
-                        await this.commitDeny(item.id);
+                        this.selected.delete(id);
+                        await this.renderDash();
+                        this.showToast("Deleted");
                     }
+                },
+
+                async bulkDelete() {
+                    if (!confirm(`Delete ${this.selected.size} items?`)) return;
+                    const ids = Array.from(this.selected);
+                    const { error } = await this.supabase.from('requests').delete().in('id', ids);
+                    if (error) this.showToast("Bulk delete failed: " + error.message);
+                    else {
+                        this.clearSelection();
+                        this.showToast("Deleted selected");
+                    }
+                },
+
+                async clearAll() {
+                    if (!confirm("This will delete ALL requests. Proceed?")) return;
+                    const { error } = await this.supabase.from('requests').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+                    if (error) this.showToast("Clear failed: " + error.message);
+                    else {
+                        this.clearSelection();
+                        this.showToast("Database Cleared");
+                    }
+                },
+
+                async showBranchManager() {
+                    const list = document.getElementById('branchList');
+                    list.innerHTML = 'Loading branches...';
+
+                    const { data: branches, error } = await this.supabase.from('branches').select('*').neq('is_admin', true);
+
+                    if (error) return this.showToast("Failed to load branches");
+
+                    list.innerHTML = '';
+                    branches.forEach(u => {
+                        const div = document.createElement('div');
+                        div.className = 'branch-item';
+                        div.innerHTML = `
+                            <div>
+                                <strong>${u.branch_name}</strong><br>
+                                <small>User: ${u.username}</small>
+                            </div>
+                            <div style="display:flex; gap:5px;">
+                                <input type="text" value="${u.username}" placeholder="User" id="u-user-${u.id}">
+                                <button class="action-btn btn-accept" style="padding:4px 8px;" onclick="window.app.saveBranch('${u.id}')">Update User</button>
+                            </div>
+                        `;
+                        list.appendChild(div);
+                    });
+                    document.getElementById('branchModal').classList.add('active');
+                },
+
+                async saveBranch(id) {
+                    const user = document.getElementById(`u-user-${id}`).value;
+
+                    const { error } = await this.supabase.from('branches').update({
+                        username: user
+                    }).eq('id', id);
+
+                    if (error) this.showToast("Update failed: " + error.message);
+                    else this.showToast(`Updated Branch`);
+                },
+
+                async addBranch() {
+                    const name = document.getElementById('nb-name').value;
+                    const user = document.getElementById('nb-user').value;
+
+                    if (!name || !user) return this.showToast("Please fill all fields");
+
+                    const { error } = await this.supabase.from('branches').insert({
+                        username: user,
+                        branch_name: name,
+                        is_admin: false
+                    });
+
+                    if (error) this.showToast("Failed to add branch: " + error.message);
+                    else {
+                        document.getElementById('nb-name').value = '';
+                        document.getElementById('nb-user').value = '';
+
+                        await this.showBranchManager();
+                        this.showToast(`Branch "${name}" Added`);
+                    }
+                },
+
+                askUser() {
+                    document.getElementById('confirmModal').classList.add('active');
+                    return new Promise(res => { this.modalPromise = res; });
+                },
+
+                modalResolve(val) {
+                    document.getElementById('confirmModal').classList.remove('active');
+                    if (this.modalPromise) this.modalPromise(val);
+                },
+
+                showToast(m) {
+                    const t = document.getElementById('toast');
+                    document.getElementById('toastMsg').innerText = m;
+                    t.classList.add('show');
+                    setTimeout(() => t.classList.remove('show'), 2500);
                 }
-                this.showToast("Batch processed");
-            },
+            };
 
-            async commitAccept(id) {
-                const { error } = await supabase.from('requests').update({
-                    status: 'Assigned',
-                    accepted_by: this.user?.id
-                }).eq('id', id);
-                if (error) console.error("commitAccept error:", error);
-            },
-
-            async commitDeny(id) {
-                const { error } = await supabase.from('requests').update({
-                    status: 'Denied',
-                    accepted_by: this.user?.id
-                }).eq('id', id);
-                if (error) console.error("commitDeny error:", error);
-            },
-
-            // --- ADMIN ACTIONS ---
-            async deleteReq(id) {
-                if (!confirm("Are you sure you want to delete this permanent?")) return;
-                const { error } = await supabase.from('requests').delete().eq('id', id);
-                if (error) this.showToast("Delete failed: " + error.message);
-                else {
-                    this.selected.delete(id);
-                    await this.renderDash();
-                    this.showToast("Deleted");
-                }
-            },
-
-            async bulkDelete() {
-                if (!confirm(`Delete ${this.selected.size} items?`)) return;
-                const ids = Array.from(this.selected);
-                const { error } = await supabase.from('requests').delete().in('id', ids);
-                if (error) this.showToast("Bulk delete failed: " + error.message);
-                else {
-                    this.clearSelection();
-                    this.showToast("Deleted selected");
-                }
-            },
-
-            async clearAll() {
-                if (!confirm("This will delete ALL requests. Proceed?")) return;
-                // Note: RLS might require specific permissions or a custom RPC for 'delete all'
-                const { error } = await supabase.from('requests').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-                if (error) this.showToast("Clear failed: " + error.message);
-                else {
-                    this.clearSelection();
-                    this.showToast("Database Cleared");
-                }
-            },
-
-            async showBranchManager() {
-                const list = document.getElementById('branchList');
-                list.innerHTML = 'Loading branches...';
-
-                const { data: branches, error } = await supabase.from('branches').select('*').neq('is_admin', true);
-
-                if (error) return this.showToast("Failed to load branches");
-
-                list.innerHTML = '';
-                branches.forEach(u => {
-                    const div = document.createElement('div');
-                    div.className = 'branch-item';
-                    div.innerHTML = `
-                        <div>
-                            <strong>${u.branch_name}</strong><br>
-                            <small>User: ${u.username}</small>
-                        </div>
-                        <div style="display:flex; gap:5px;">
-                            <input type="text" value="${u.username}" placeholder="User" id="u-user-${u.id}">
-                            <button class="action-btn btn-accept" style="padding:4px 8px;" onclick="app.saveBranch('${u.id}')">Update User</button>
-                        </div>
-                    `;
-                    list.appendChild(div);
-                });
-                document.getElementById('branchModal').classList.add('active');
-            },
-
-            async saveBranch(id) {
-                const user = document.getElementById(`u-user-${id}`).value;
-
-                const { error } = await supabase.from('branches').update({
-                    username: user
-                }).eq('id', id);
-
-                if (error) this.showToast("Update failed: " + error.message);
-                else this.showToast(`Updated Branch`);
-            },
-
-            async addBranch() {
-                const name = document.getElementById('nb-name').value;
-                const user = document.getElementById('nb-user').value;
-
-                if (!name || !user) return this.showToast("Please fill all fields");
-
-                const { error } = await supabase.from('branches').insert({
-                    username: user,
-                    branch_name: name,
-                    is_admin: false
-                });
-
-                if (error) this.showToast("Failed to add branch: " + error.message);
-                else {
-                    document.getElementById('nb-name').value = '';
-                    document.getElementById('nb-user').value = '';
-
-                    await this.showBranchManager(); // Refresh list
-                    this.showToast(`Branch "${name}" Added`);
-                }
-            },
-
-            askUser() {
-                document.getElementById('confirmModal').classList.add('active');
-                return new Promise(res => { this.modalPromise = res; });
-            },
-
-            modalResolve(val) {
-                document.getElementById('confirmModal').classList.remove('active');
-                if (this.modalPromise) this.modalPromise(val);
-            },
-
-            showToast(m) {
-                const t = document.getElementById('toast');
-                document.getElementById('toastMsg').innerText = m;
-                t.classList.add('show');
-                setTimeout(() => t.classList.remove('show'), 2500);
-            }
-        };
-        window.app = app; // Ensure app is global for inline handlers
-        app.init();
+            window.app = app;
+            app.init();
+        })();
     </script>
 </body>
 
