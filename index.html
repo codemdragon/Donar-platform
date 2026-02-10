@@ -583,8 +583,15 @@
                     // Show request view immediately to prevent blank screen
                     this.switchView('request');
 
+                    // Set up auth state listener (but ignore INITIAL_SESSION to prevent duplicate handling)
                     this.supabase.auth.onAuthStateChange(async (event, session) => {
                         console.log("🔐 Auth state changed:", event, session ? "Logged in" : "Logged out");
+                        
+                        // Ignore INITIAL_SESSION since we handle it manually below
+                        if (event === 'INITIAL_SESSION') {
+                            return;
+                        }
+                        
                         this.session = session;
                         if (session) {
                             await this.loadUserProfile();
@@ -595,6 +602,7 @@
                         }
                     });
 
+                    // Manually check for existing session
                     try {
                         const { data: { session }, error } = await this.supabase.auth.getSession();
                         console.log("📋 Session check:", session ? "Found session" : "No session", error);
