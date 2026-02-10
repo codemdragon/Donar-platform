@@ -576,7 +576,11 @@
         // --- SUPABASE CONFIG ---
         const SUPABASE_URL = "https://jallpzdxdzgjkgjwcggt.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphbGxwemR4ZHpnamtnandjZ2d0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDg4MzMsImV4cCI6MjA4NjI4NDgzM30.9Kras0mPHTfMQUnVibuXv3YuGw_tXXwK896nw4Au7P0";
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Use a local variable to avoid clashing with the global 'supabase' library if it exists
+        const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.supabase = _supabase; // Attach instance to window
+        const supabase = _supabase; // Local shortcut
 
         const app = {
             user: null, // This will store { id, n, r, b_id }
@@ -1049,7 +1053,7 @@
                 setTimeout(() => t.classList.remove('show'), 2500);
             }
         };
-
+        window.app = app; // Ensure app is global for inline handlers
         app.init();
     </script>
 </body>
