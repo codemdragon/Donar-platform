@@ -453,7 +453,7 @@
                         <button type="submit" class="submit-btn">Submit Request</button>
                     </form>
                 </div>
-                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('login')"
+                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('login'); return false;"
                         style="color:var(--primary);">Branch Login →</a></p>
             </div>
         </div>
@@ -468,7 +468,7 @@
                     <div class="form-group"><label>Password</label><input type="password" id="pass" required></div>
                     <button type="submit" class="submit-btn" style="background:#1f2937;">Login</button>
                 </form>
-                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('request')">←
+                <p style="text-align:center; margin-top:20px;"><a href="#" onclick="app.switchView('request'); return false;">←
                         Back</a></p>
             </div>
         </div>
@@ -706,7 +706,7 @@
                 const nav = document.getElementById('nav-actions');
                 nav.innerHTML = this.user ?
                     `<span>${this.user.n}</span><button class="nav-btn-danger" onclick="app.logout()">Logout</button>` :
-                    `<button class="nav-btn-light" onclick="app.switchView('login')">Staff Login</button>`;
+                    `<button class="nav-btn-light" onclick="app.switchView('login'); return false;">Staff Login</button>`;
             },
 
             logout() {
